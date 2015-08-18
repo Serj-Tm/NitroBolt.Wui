@@ -152,17 +152,21 @@ namespace NitroBolt.Wui
     public HAttribute(HName name, object value)
     {
       this.Name = name;
-      this.Value = value?.ToString();
+      this.Value = value;
     }
     public readonly HName Name;
-    public readonly string Value;
+    public readonly object Value;
 
     public override void ToHtmlText(StringBuilder builder, string prefix = "")
     {
-      builder.Append(Name.ToString());
-      builder.Append("='");
-      builder.Append(System.Web.HttpUtility.HtmlEncode(Value));
-      builder.Append("'");
+      var s = Value?.ToString();
+      if (s != null)
+      {
+        builder.Append(Name.ToString());
+        builder.Append("='");
+        builder.Append(System.Web.HttpUtility.HtmlEncode(s));
+        builder.Append("'");
+      }
     }
   }
   public class HText:HObject

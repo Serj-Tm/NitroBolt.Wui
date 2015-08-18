@@ -513,7 +513,7 @@ function sync_page_from_json(json)
     {
       if (attr == null)
         return null;
-      return attr.Value;
+      return attr.Value?.ToString();
     }
     public string Attribute_Get(HElement element, string name)
     {
@@ -522,7 +522,7 @@ function sync_page_from_json(json)
       var attr = element.Attributes.OrEmpty().FirstOrDefault(_attr => _attr.Name.LocalName == name);
       if (attr == null)
         return null;
-      return attr.Value;
+      return attr.Value?.ToString();
     }
   }
 }
