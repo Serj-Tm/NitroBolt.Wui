@@ -86,6 +86,7 @@
     <TypeScriptCompile Include="ts\server_event.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="NitroBolt.Wui.nuspec" />
     <None Include="sync.js" />
   </ItemGroup>
   <ItemGroup>
