@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Web;
-using MetaTech.Library;
 using System.Xml.XPath;
 using System.Xml.Linq;
+using NitroBolt.Functional;
 
 namespace NitroBolt.StateMachine
 {
@@ -16,15 +16,15 @@ namespace NitroBolt.StateMachine
     {
       var state = _state.As<MainState>() ?? new MainState();
 
-      foreach (var json in jsons.Else_Empty())
+      foreach (var json in jsons.OrEmpty())
       {
-        switch (json.JPath("data", "command").ToString_Fair())
+        switch (json.JPath("data", "command")?.ToString())
         {
           case "new-order":
             {
-              var name = json.JPath("data", "name").ToString_Fair() ?? "C";
-              var isDelivery = json.JPath("data", "is-delivery").ToString_Fair() == "True";
-              var toTime = ToTime(json.JPath("data", "to-time").ToString_Fair());
+              var name = json.JPath("data", "name")?.ToString() ?? "C";
+              var isDelivery = json.JPath("data", "is-delivery")?.ToString() == "True";
+              var toTime = ToTime(json.JPath("data", "to-time")?.ToString());
               var status = toTime == null ? ProductStatus.New: ProductStatus.InQueue;
               var products = name == "B" ? new[] { new Product("K", status) } : new[] { new Product("M", status), new Product("P", status) };
               state = state.With(orders: state.Orders.Add(new Order(name: name, isDelivery: isDelivery, status: toTime == null ? OrderStatus.New: OrderStatus.InQueue, products: ImmutableArray.Create(products), toTime: toTime)));  
@@ -35,7 +35,7 @@ namespace NitroBolt.StateMachine
               var orderId = ConvertHlp.ToGuid(json.JPath("data", "order"));
               var productId = ConvertHlp.ToGuid(json.JPath("data", "product"));
               var order = state.Orders.FirstOrDefault(_order => _order.Id == orderId);
-              var product = order._f(_ => _.Products).Else_Empty().FirstOrDefault(_product => _product.Id == productId);
+              var product = order?.Products.OrEmpty().FirstOrDefault(_product => _product.Id == productId);
               if (product != null && product.Status != ProductStatus.New)
                 product = null;
               if (product != null)
@@ -49,7 +49,7 @@ namespace NitroBolt.StateMachine
               var orderId = ConvertHlp.ToGuid(json.JPath("data", "order"));
               var productId = ConvertHlp.ToGuid(json.JPath("data", "product"));
               var order = state.Orders.FirstOrDefault(_order => _order.Id == orderId);
-              var product = order._f(_ => _.Products).Else_Empty().FirstOrDefault(_product => _product.Id == productId);
+              var product = order?.Products.OrEmpty().FirstOrDefault(_product => _product.Id == productId);
               if (product != null && product.Status != ProductStatus.Prepare)
                 product = null;
               if (product != null)
@@ -73,7 +73,7 @@ namespace NitroBolt.StateMachine
           case "courier":
             {
               var orderId = ConvertHlp.ToGuid(json.JPath("data", "order"));
-              var courier = json.JPath("data", "courier").ToString_Fair();
+              var courier = json.JPath("data", "courier")?.ToString();
               var order = state.Orders.FirstOrDefault(_order => _order.Id == orderId);
               if (order != null && order.Status != OrderStatus.Ready && !order.IsDelivery)
                 order = null;
@@ -136,7 +136,7 @@ namespace NitroBolt.StateMachine
     {
       var page = h.Html
       (
-        h.Head(          
+        h.Head(
           h.Element("title", "NitroBolt.Wui - WebExample. State machine"),
           h.Css
           (
@@ -158,7 +158,7 @@ namespace NitroBolt.StateMachine
                h.Div("Новый заказ"),
                h.Div("Опции"),
                h.Span("\xA0▪ "), h.Span("На указанное время: "),
-               h.Input(h.type("text"), h.data("name", "to-time")),
+               h.Input(h.type("text"), h.data("name", "to-time")), h.Span(h.style("color:darkgray;"),  $" Пример(+15с): {DateTime.Now.AddSeconds(15)}"),
                h.Br(),
                h.Span("\xA0▪ "), h.Input(h.type("checkbox"), h.data("name", "is-delivery")), h.Span("Доставка"), h.Br(),
                new[] { "A", "B"}
