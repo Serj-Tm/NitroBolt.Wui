@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-//using System.Net.Json;
+
 
 namespace NitroBolt.Wui
 {
@@ -41,26 +41,12 @@ namespace NitroBolt.Wui
           return index.Select(pair => string.Format("{0}{1}:{2}", prefix, pair.Key, JsonObjectToString(pair.Value, prefix + "  "))).JoinToString("\n");
         }
       }
-      //if (true)
-      //{
-      //  var index = jsonData.As<JsonObjectCollection>();
-      //  if (index != null)
-      //  {
-      //    return index.Select(pair => string.Format("{0}{1}:{2}", prefix, pair.Name, JsonObjectToString(pair.Value(), prefix + "  "))).JoinToString("\n");
-      //  }
-      //}
       if (true)
       {
         var array = jsonData.As<object[]>();
         if (array != null)
           return string.Format("{0}[\n{1}\n{0}]\n", prefix, array.Select(item => JsonObjectToString(item, prefix + "  ")).JoinToString("\n"));
       }
-      //if (true)
-      //{
-      //  var array = jsonData.As<IEnumerable<JsonObject>>();
-      //  if (array != null)
-      //    return string.Format("{0}[\n{1}\n{0}]\n", prefix, array.Select(item => JsonObjectToString(item, prefix + "  ")).JoinToString("\n"));
-      //}
       return jsonData?.ToString();
     }
     public static object JPath(object jsonData, params string[] path)
@@ -93,33 +79,10 @@ namespace NitroBolt.Wui
             continue;
           }
         }
-        //if (true)
-        //{
-        //  var index = jsonData.As<List<JsonObject>>();
-        //  if (index != null)
-        //    jsonData = index.FirstOrDefault();
-        //}
-        //if (true)
-        //{
-        //  var index = jsonData.As<JsonObjectCollection>();
-        //  if (index != null)
-        //  {
-        //    jsonData = (index.FirstOrDefault(_obj => _obj.Name == camelEntry) ?? index.FirstOrDefault(_obj => _obj.Name == entry)).Value();
-        //    continue;
-        //  }
-        //}
         break;
       }
       return jsonData;
     }
-    //public static object Value(this JsonObject obj)
-    //{
-    //  if (obj == null)
-    //    return null;
-    //  if (obj is JsonObjectCollection)
-    //    return obj;
-    //  return obj.GetValue();
-    //}
   }
 
   

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using System.Xml.Linq;
 using System.Linq;
 using NitroBolt.Functional;
 
@@ -12,7 +11,7 @@ namespace NitroBolt.Wui
   {
     public static HElement[] Scripts_Inline(string handlerName, int cycle, bool isDebug = false, TimeSpan? refreshPeriod = null)
     {
-      return NitroBolt.Wui.HtmlJavaScriptSynchronizer.Scripts(new HElementProvider(), isDebug: isDebug, refreshPeriod: refreshPeriod, isInlineSyncScript: false);
+      return HtmlJavaScriptDiffer.Scripts(new HElementProvider(), isDebug: isDebug, refreshPeriod: refreshPeriod, isInlineSyncScript: false);
     }
     [Obsolete]
     public static HElement[] Scripts(string handlerName, int cycle, bool isDebug = false, TimeSpan? refreshPeriod = null, bool isInlineSyncScript = true)
@@ -46,7 +45,7 @@ namespace NitroBolt.Wui
           }
           : Array<HElement>.Empty
         )
-        .Concat(NitroBolt.Wui.HtmlJavaScriptSynchronizer.Scripts(new HElementProvider(), isDebug: isDebug, refreshPeriod:refreshPeriod, isInlineSyncScript: isInlineSyncScript))
+        .Concat(NitroBolt.Wui.HtmlJavaScriptDiffer.Scripts(new HElementProvider(), isDebug: isDebug, refreshPeriod:refreshPeriod, isInlineSyncScript: isInlineSyncScript))
         .Concat(
           isInlineSyncScript
           ? new[]
@@ -154,7 +153,7 @@ namespace NitroBolt.Wui
 
         var isPartial = page.Name.LocalName != "html";
 
-        var js_updates = HtmlJavaScriptSynchronizer.JsSync(new HElementProvider(), prevPage == null ? null : isPartial ? prevPage : prevPage.Element("body"), isPartial ? page : page.Element("body")).ToArray();
+        var js_updates = HtmlJavaScriptDiffer.JsSync(new HElementProvider(), prevPage == null ? null : isPartial ? prevPage : prevPage.Element("body"), isPartial ? page : page.Element("body")).ToArray();
         var jupdate = new Dictionary<string, object>() { { "cycle", update.Cycle }, { "prev_cycle", prevCycle }, {"processed_commands", json_commands.OrEmpty().Length}, { "updates", js_updates } };
 
         if (context.Request.Url.AbsolutePath.EndsWith(".text.js"))
@@ -181,7 +180,7 @@ namespace NitroBolt.Wui
           var startHead = new HElement(head.Name, 
             head.Attributes, 
             head.Nodes,
-            NitroBolt.Wui.HWebSynchronizeHandler.Scripts_Inline(handlerName, update.Cycle, refreshPeriod: result.RefreshPeriod ?? TimeSpan.FromSeconds(10))
+            HWebSynchronizeHandler.Scripts_Inline(handlerName, update.Cycle, refreshPeriod: result.RefreshPeriod ?? TimeSpan.FromSeconds(10))
           );
           page = new HElement("html", startHead, new HElement("body"));
         }

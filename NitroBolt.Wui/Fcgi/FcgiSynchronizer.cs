@@ -32,7 +32,7 @@ namespace NitroBolt.Wui
             )
           )
         }
-        .Concat(NitroBolt.Wui.HtmlJavaScriptSynchronizer.Scripts(new HElementProvider(), isDebug: isDebug))
+        .Concat(NitroBolt.Wui.HtmlJavaScriptDiffer.Scripts(new HElementProvider(), isDebug: isDebug))
         .Concat(new[]
         {
           h.Script(
@@ -109,7 +109,7 @@ namespace NitroBolt.Wui
         var page = result.Html;
 
 
-        var commands = HtmlJavaScriptSynchronizer.JsSync(new HElementProvider(), prevPage == null ? null : prevPage.Element("body"), page.Element("body")).ToArray();
+        var commands = HtmlJavaScriptDiffer.JsSync(new HElementProvider(), prevPage == null ? null : prevPage.Element("body"), page.Element("body")).ToArray();
         var jupdate = new Dictionary<string, object>() { { "cycle", update.Cycle }, { "prev_cycle", prevCycle }, { "commands", commands } };
 
         var jsSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();

@@ -18,12 +18,12 @@ namespace NitroBolt.Wui
     }
     public override IEnumerable<object> GetSyncCommands(HElement page)
     {
-      return HtmlJavaScriptSynchronizer.JsSync(new HElementProvider(), lastPage.Element("body"), page.Element("body"));
+      return HtmlJavaScriptDiffer.JsSync(new HElementProvider(), lastPage.Element("body"), page.Element("body"));
     }
 
     public static HElement[] Scripts(bool isDebug = false)
     {
-      var scripts = HtmlJavaScriptSynchronizer.Scripts(new HElementProvider(), isDebug).Where(element => element != null);
+      var scripts = HtmlJavaScriptDiffer.Scripts(new HElementProvider(), isDebug).Where(element => element != null);
       return scripts.Where(element => element.Name.LocalName == "meta")
         .Concat(
           new[]

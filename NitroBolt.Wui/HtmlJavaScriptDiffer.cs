@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace NitroBolt.Wui
 {
-  public class HtmlJavaScriptSynchronizer
+  public class HtmlJavaScriptDiffer
   {
     public static TElement[] Scripts<TElement, TAttribute, TObject>(IElementProvider<TElement, TAttribute, TObject> elementProvider, bool isDebug = false, TimeSpan? refreshPeriod = null, bool isInlineSyncScript = true)      
     {
