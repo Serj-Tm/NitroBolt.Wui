@@ -5,6 +5,12 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui", "NitroBolt.Wui\NitroBolt.Wui.csproj", "{6ADEFD5A-BB8A-44F8-9E8E-CDFBD0ABC510}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Example.DesktopSampler", "NitroBolt.Wui.Example.DesktopSampler\NitroBolt.Wui.Example.DesktopSampler.csproj", "{04AD2E8F-D39B-4E26-BAB3-2761103A4CA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Example.WebSampler", "NitroBolt.Wui.Example.WebSampler\NitroBolt.Wui.Example.WebSampler.csproj", "{D6D3E3D6-B70D-48B6-A1DF-D386669372D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Example.Web.StateMachine", "NitroBolt.Wui.Example.Web.StateMachine\NitroBolt.Wui.Example.Web.StateMachine.csproj", "{A38284C4-D91D-415C-B940-F8413F13C7F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{6ADEFD5A-BB8A-44F8-9E8E-CDFBD0ABC510}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6ADEFD5A-BB8A-44F8-9E8E-CDFBD0ABC510}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6ADEFD5A-BB8A-44F8-9E8E-CDFBD0ABC510}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04AD2E8F-D39B-4E26-BAB3-2761103A4CA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04AD2E8F-D39B-4E26-BAB3-2761103A4CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04AD2E8F-D39B-4E26-BAB3-2761103A4CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04AD2E8F-D39B-4E26-BAB3-2761103A4CA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6D3E3D6-B70D-48B6-A1DF-D386669372D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6D3E3D6-B70D-48B6-A1DF-D386669372D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6D3E3D6-B70D-48B6-A1DF-D386669372D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6D3E3D6-B70D-48B6-A1DF-D386669372D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A38284C4-D91D-415C-B940-F8413F13C7F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A38284C4-D91D-415C-B940-F8413F13C7F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A38284C4-D91D-415C-B940-F8413F13C7F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A38284C4-D91D-415C-B940-F8413F13C7F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
