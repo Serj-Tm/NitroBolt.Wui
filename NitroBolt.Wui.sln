@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Example.WebSa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Example.Web.StateMachine", "NitroBolt.Wui.Example.Web.StateMachine\NitroBolt.Wui.Example.Web.StateMachine.csproj", "{A38284C4-D91D-415C-B940-F8413F13C7F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Tests", "NitroBolt.Wui.Tests\NitroBolt.Wui.Tests.csproj", "{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A38284C4-D91D-415C-B940-F8413F13C7F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A38284C4-D91D-415C-B940-F8413F13C7F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A38284C4-D91D-415C-B940-F8413F13C7F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
