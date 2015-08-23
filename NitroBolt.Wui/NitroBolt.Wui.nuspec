@@ -9,5 +9,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>NitroBolt.Wui C# Server-Side React</description>
     <copyright>Copyright ©  2013</copyright>
+    <projectUrl>https://github.com/Serj-Tm/NitroBolt.Wui</projectUrl>
+    <tags>Asp.Net Server-Side React Wui</tags>
   </metadata>
 </package>
