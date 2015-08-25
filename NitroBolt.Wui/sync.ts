@@ -330,7 +330,7 @@ function JsPath():string
 {
   var pathname = window.location.pathname;
   if (pathname == '/')
-    pathname = '/default.html';
+    pathname = '/index.html';
   if (pathname[pathname.length - 1] == '/')
     pathname = pathname.substring(0, pathname.length - 1);
   return (<any>window.location).origin + pathname + '.js';

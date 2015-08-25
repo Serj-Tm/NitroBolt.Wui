@@ -10,7 +10,6 @@ var ContainerSynchronizer = (function () {
         this.is_updating = false;
         this.commands = [];
         this.container = container != null ? $(container) : $('body');
-        //this.server_event = server_event == null ? this.server_web_event : server_event;
         this.container_name = name;
         this.sync_refresh_period = sync_refresh_period;
         this.id = Math.random().toString();
@@ -63,7 +62,6 @@ var ContainerSynchronizer = (function () {
             if (!current)
                 return null;
             var pentry = path[i];
-            //    $('#log').append('find_element: ' +  i + ' ' + pentry.index);
             if (pentry.kind == 'element') {
                 current = current.children().eq(pentry.index);
             }
@@ -105,16 +103,12 @@ var ContainerSynchronizer = (function () {
         if (value != null) {
             element.on(event, function (e) {
                 if (value.substr(0, 2) == ';;') {
-                    var res = function (sync, e) {
-                        return eval(value);
-                    }.apply(element, [_this, e]);
+                    var res = function (sync, e) { return eval(value); }.apply(element, [_this, e]);
                     if (typeof (res) == 'boolean')
                         return res;
                 }
                 else {
-                    var res = function () {
-                        return eval(value);
-                    }.apply(element);
+                    var res = function () { return eval(value); }.apply(element);
                     if (typeof (res) == 'boolean')
                         return res;
                     _this.server_element_event(element, e);
@@ -127,10 +121,8 @@ var ContainerSynchronizer = (function () {
             return;
         var len = !desc.e ? 0 : desc.e.length;
         for (var i = 0; i < len; ++i) {
-            //window.external.Debug(element[0].tagName != null ? element[0].tagName:element);
             element.append(this.create_element(desc.e[i]));
         }
-        //window.external.Debug('attrs');
         var len = !desc.a ? 0 : desc.a.length;
         for (var i = 0; i < len; ++i) {
             if (this.is_event_name(desc.a[i].name)) {
@@ -146,7 +138,6 @@ var ContainerSynchronizer = (function () {
                 element.attr(desc.a[i].name, desc.a[i].value);
             }
         }
-        //window.external.Debug('text');
         if (desc.t != null) {
             element.text(desc.t.value);
         }
@@ -156,18 +147,13 @@ var ContainerSynchronizer = (function () {
     };
     ContainerSynchronizer.prototype.create_element = function (desc) {
         var element = $(desc.ns ? document.createElementNS(desc.ns, desc.name) : document.createElement(desc.name));
-        //window.external.Debug('create_element: ' + desc.a.length);
         var jsInit = null;
         for (var i = 0; i < (!desc.a ? 0 : desc.a.length); ++i) {
-            //window.external.Debug('n: ' + desc.a[i].name);
             if (desc.a[i].name == 'js-init')
                 jsInit = desc.a[i].value;
         }
         if (jsInit != null) {
-            //window.external.Debug('js-init: ' + jsInit);
-            !(function () {
-                return eval(jsInit);
-            }.apply(element));
+            !(function () { return eval(jsInit); }.apply(element));
         }
         this.set_element(element, desc);
         return element;
@@ -197,9 +183,7 @@ var ContainerSynchronizer = (function () {
                 current.prepend(this.create_element(desc));
                 break;
             case 'js-update':
-                !(function () {
-                    return eval(desc);
-                }.apply(current));
+                !(function () { return eval(desc); }.apply(current));
                 break;
         }
     };
@@ -243,35 +227,28 @@ var ContainerSynchronizer = (function () {
                 $.getJSON(this.js_path() + '?cycle=' + this.cycle + '&r=' + (1000 * Math.random() + '').substring(0, 3), function (data) { return _this.sync(data); });
             }
         }
-        catch (e) {
-        }
+        catch (e) { }
     };
     ContainerSynchronizer.prototype.js_path = function () {
         if (this.container_name != null)
             return this.container_name;
         return JsPath();
     };
-    ContainerSynchronizer.eventProps = ['type', 'bubbles', 'cancelable', 'eventPhase', 'timeStamp', 'button', 'clientX', 'clientY', 'screenX', 'screenY', 'keyIdentifier', 'keyLocation', 'keyCode', 'charCode', 'which', 'altKey', 'ctrlKey', 'metaKey', 'shiftKey'];
+    ContainerSynchronizer.eventProps = ['type', 'bubbles', 'cancelable', 'eventPhase', 'timeStamp',
+        'button', 'clientX', 'clientY', 'screenX', 'screenY',
+        'keyIdentifier', 'keyLocation', 'keyCode', 'charCode', 'which',
+        'altKey', 'ctrlKey', 'metaKey', 'shiftKey'
+    ];
     return ContainerSynchronizer;
 })();
 function JsPath() {
     var pathname = window.location.pathname;
     if (pathname == '/')
-        pathname = '/default.html';
+        pathname = '/index.html';
     if (pathname[pathname.length - 1] == '/')
         pathname = pathname.substring(0, pathname.length - 1);
     return window.location.origin + pathname + '.js';
 }
-//function init_sync_container(container)
-//{
-//  window.setInterval(function () { update_container(container); }, (typeof sync_refresh_period === 'undefined') ? 60 * 1000 : sync_refresh_period);
-//  update_container(container);
-//}
-//function sync_container_from_json(container: JQuery, json:string)
-//{
-//  sync_container(container, $.parseJSON(json));
-//  return true;
-//}
 var Command = (function () {
     function Command() {
     }
@@ -297,4 +274,3 @@ var PathEntry = (function () {
     }
     return PathEntry;
 })();
-//# sourceMappingURL=sync.js.map
