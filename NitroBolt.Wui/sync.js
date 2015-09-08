@@ -215,24 +215,31 @@ var ContainerSynchronizer = (function () {
     ContainerSynchronizer.prototype.server_event = function (json) {
         var _this = this;
         this.commands.push(json);
-        $.post(this.js_path() + '?cycle=' + this.cycle, { 'frame-id': this.id, 'cycle': this.cycle, 'commands': this.commands }, function (data) { return _this.sync(data); }, 'json');
+        $.post(this.js_path('cycle=' + this.cycle), { 'frame-id': this.id, 'cycle': this.cycle, 'commands': this.commands }, function (data) { return _this.sync(data); }, 'json');
     };
     ContainerSynchronizer.prototype.update_all = function () {
         var _this = this;
         try {
             if (this.commands.length > 0) {
-                $.post(this.js_path() + '?cycle=' + this.cycle, { 'frame-id': this.id, 'cycle': this.cycle, 'commands': this.commands }, function (data) { return _this.sync(data); }, 'json');
+                $.post(this.js_path('cycle=' + this.cycle), { 'frame-id': this.id, 'cycle': this.cycle, 'commands': this.commands }, function (data) { return _this.sync(data); }, 'json');
             }
             else {
-                $.getJSON(this.js_path() + '?cycle=' + this.cycle + '&r=' + (1000 * Math.random() + '').substring(0, 3), function (data) { return _this.sync(data); });
+                $.getJSON(this.js_path('cycle=' + this.cycle + '&r=' + (1000 * Math.random() + '').substring(0, 3)), function (data) { return _this.sync(data); });
             }
         }
         catch (e) { }
     };
-    ContainerSynchronizer.prototype.js_path = function () {
-        if (this.container_name != null)
-            return this.container_name;
-        return JsPath();
+    ContainerSynchronizer.prototype.js_path = function (query) {
+        var path = this.container_name;
+        if (path == null)
+            path = JsPath();
+        if (query != null && query != '') {
+            if (path.indexOf('?') < 0)
+                path += '?' + query;
+            else
+                path += '&' + query;
+        }
+        return path;
     };
     ContainerSynchronizer.eventProps = ['type', 'bubbles', 'cancelable', 'eventPhase', 'timeStamp',
         'button', 'clientX', 'clientY', 'screenX', 'screenY',
@@ -242,12 +249,12 @@ var ContainerSynchronizer = (function () {
     return ContainerSynchronizer;
 })();
 function JsPath() {
-    var pathname = window.location.pathname;
-    if (pathname == '/')
-        pathname = '/index.html';
-    if (pathname[pathname.length - 1] == '/')
-        pathname = pathname.substring(0, pathname.length - 1);
-    return window.location.origin + pathname + '.js';
+    var path = window.location.href;
+    var questionIndex = path.indexOf('?');
+    if (questionIndex < 0)
+        questionIndex = path.length;
+    var slashIndex = path.indexOf('/', path.indexOf('//') + 2);
+    return path.substring(0, questionIndex) + (slashIndex < 0 ? '/' : '') + (slashIndex + 1 == questionIndex ? 'index.html' : '') + '.js' + path.substring(questionIndex);
 }
 var Command = (function () {
     function Command() {
