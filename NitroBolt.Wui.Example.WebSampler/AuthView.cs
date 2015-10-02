@@ -69,14 +69,14 @@ namespace NitroBolt.WebSampler
       var account = context.HttpContext.UserName();
 
 
-      var page = Page(logins, account);
+      var page = Page(logins, account, context.HttpContext);
       return new NitroBolt.Wui.HtmlResult<HElement>
       {
         Html = page,
         State = null,
       };
     }
-    static HElement Page(Dictionary<string, string> logins, string username)
+    static HElement Page(Dictionary<string, string> logins, string username, HttpContext httpContext)
     {
       return h.Html
         (
@@ -95,7 +95,8 @@ namespace NitroBolt.WebSampler
                : null,
             username != null
              ? h.Div("Данные")
-             : null
+             : null,
+            h.Div(httpContext.Request.QueryString)
           )
         );
     }

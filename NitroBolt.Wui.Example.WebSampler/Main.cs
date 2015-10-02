@@ -56,7 +56,7 @@ namespace NitroBolt.WebSampler
           h.Input(h.type("text"), h.Attribute("onkeyup", ";"), new hdata{{"command", "text"}}),
           h.Div(state.Text),
           h.Div(h.A(h.href("multi.html"), "multi sync frames")),
-          h.Div(h.A(h.href("auth-view.html"), "auth-view"))
+          h.Div(h.A(h.href("auth-view.html?id=12"), "auth-view"))
           //h.Div(DateTime.UtcNow),
           //h.Input(h.type("button"), h.onclick(";"), h.value("update")),
           //h.Div(1, h.Attribute("js-init", "$(this).css('color', 'red')"))
