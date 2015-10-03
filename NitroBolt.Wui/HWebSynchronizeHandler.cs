@@ -145,7 +145,7 @@ namespace NitroBolt.Wui
         
         var watcher = new System.Diagnostics.Stopwatch();
         watcher.Start();
-        HtmlResult<HElement> result = handler(prevState, json_commands, new HContext(handlerPair.Key, context));
+        var result = handler(prevState, json_commands.OrEmpty(), new HContext(handlerPair.Key, context));
 
         var update = PushUpdate(context, handlerName, result.Html, result.State);
 
@@ -169,7 +169,7 @@ namespace NitroBolt.Wui
       {
         var lastState = Updates(context).LastOrDefault(_update => _update.Handler == handlerName)?.State;
 
-        var result = handler(lastState, null, new HContext(handlerPair.Key, context));
+        var result = handler(lastState, Array<JsonData>.Empty, new HContext(handlerPair.Key, context));
         var page = result.Html;
         if (!context.Request.Url.AbsolutePath.EndsWith(".raw.html"))
         {
