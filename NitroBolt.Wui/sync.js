@@ -227,7 +227,9 @@ var ContainerSynchronizer = (function () {
                 $.getJSON(this.js_path('cycle=' + this.cycle + '&r=' + (1000 * Math.random() + '').substring(0, 3)), function (data) { return _this.sync(data); });
             }
         }
-        catch (e) { }
+        catch (e) {
+            console.log(e);
+        }
     };
     ContainerSynchronizer.prototype.js_path = function (query) {
         var path = this.container_name;

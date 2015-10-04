@@ -316,7 +316,10 @@ class ContainerSynchronizer
                 $.getJSON(this.js_path('cycle=' + this.cycle + '&r=' + (1000 * Math.random() + '').substring(0, 3)), data => this.sync(data));
             }
         }
-        catch (e) { }
+        catch (e)
+        {
+            console.log(e);
+        }
     }
     js_path(query: string): string
     {
