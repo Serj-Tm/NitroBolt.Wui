@@ -10,7 +10,6 @@ namespace NitroBolt.StateMachine
     public HSync()
       : base(new Dictionary<string, Func<object, JsonData[], HContext, HtmlResult<HElement>>> 
         { 
-          { "default", Main.HView },
           { "index", Main.HView },
         })
     {

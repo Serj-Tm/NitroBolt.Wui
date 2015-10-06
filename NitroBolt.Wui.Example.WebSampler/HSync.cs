@@ -10,7 +10,6 @@ namespace NitroBolt.WebSampler
     public HSync()
       : base(new Dictionary<string, Func<object, JsonData[], HContext, HtmlResult<HElement>>> 
         { 
-          { "default", Main.HView },
           { "index", Main.HView },
           {"part1", Part1.HView}, 
           {"part2", Part2.HView},
