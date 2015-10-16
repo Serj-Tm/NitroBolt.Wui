@@ -148,7 +148,8 @@ namespace NitroBolt.Wui
 
                 var watcher = new System.Diagnostics.Stopwatch();
                 watcher.Start();
-                var result = handler(prevState, json_commands.OrEmpty(), new HContext(handlerPair.Key, context));
+                var hContext = new HContext(handlerPair.Key, context);
+                var result = ProcessCommands(handler, prevState, json_commands, hContext);
 
                 var update = PushUpdate(context, handlerName, result.Html, result.State);
 
@@ -189,6 +190,37 @@ namespace NitroBolt.Wui
                 }
 
                 context.Response.Write(page.ToString());
+            }
+        }
+
+        private static HtmlResult<HElement> ProcessCommands(Func<object, JsonData[], HContext, HtmlResult<HElement>> handler, object prevState, JsonData[] json_commands, HContext hContext)
+        {
+            try
+            {
+                return handler(prevState, json_commands.OrEmpty(), hContext);
+            }
+            catch (Exception exc)
+            {
+                if (!json_commands.OrEmpty().Any())
+                    throw;
+
+                System.Diagnostics.Trace.Write(exc);
+
+                HtmlResult<HElement> result = null;
+                
+                //HACK игнорируем ошибку, чтобы избежать бесконечного зацикливания на ней
+                foreach (var command in json_commands.OrEmpty())
+                {
+                    try
+                    {
+                        result =  handler(result?.State ?? prevState, new[] { command }, hContext);
+                    }
+                    catch (Exception exc2)
+                    {
+                        System.Diagnostics.Trace.Write(exc2);
+                    }
+                }
+                return result ?? handler(prevState, Array<JsonData>.Empty, hContext);
             }
         }
 
