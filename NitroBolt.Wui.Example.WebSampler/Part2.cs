@@ -52,6 +52,10 @@ namespace NitroBolt.WebSampler
         (
           HWebSynchronizeHandler.Updates(context.HttpContext)
            .Select(update => h.Div(string.Format("{0}({1}): {2}", update.Handler, update.Cycle, update.Elapsed)))        
+        ),
+        h.Div
+        (
+            h.Raw($"121<b>{DateTime.UtcNow.Ticks}</b>12")
         )
       );
       return page;
