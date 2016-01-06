@@ -5,18 +5,19 @@ using System.Text;
 
 namespace NitroBolt.Wui
 {
-  public class SyncScriptHandler: System.Web.IHttpHandler
-  {
-    public bool IsReusable
+    public class SyncScriptHandler : System.Web.IHttpHandler
     {
-      get { return true; }
-    }
+        public bool IsReusable
+        {
+            get { return true; }
+        }
 
-    public void ProcessRequest(System.Web.HttpContext context)
-    {
-      //context.Response.Write(Scripts().Select(script => script.ToHtmlText()).JoinToString(null));
-      context.Response.Write(ScriptResource.sync_js);
-    }
+        public void ProcessRequest(System.Web.HttpContext context)
+        {
+            //context.Response.Write(Scripts().Select(script => script.ToHtmlText()).JoinToString(null));
+            context.Response.ContentType = "application/javascript";
+            context.Response.Write(ScriptResource.sync_js);
+        }
 
-  }
+    }
 }
