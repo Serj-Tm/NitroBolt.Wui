@@ -76,12 +76,21 @@ class ContainerSynchronizer
                     var child = $(childs[i]);
                     if (child.data().name != null)
                     {
-                        result_data[child.data().name] = child.is(':checkbox') ? child.is(':checked') : child.val();
+                        if (!child.is(':radio') || child.is(':checked'))
+                            result_data[child.data().name] = this.element_value(child);
                     }
                 }
             }
         }
-        this.server_event(JSON.stringify({ value: element.is(':checkbox') ? element.is(':checked') : element.val(), checked: element.is(':checked'), data: $.extend(result_data, element_data, data), event: e }));
+        this.server_event(JSON.stringify({ value: this.element_value(element), checked: element.is(':checked'), data: $.extend(result_data, element_data, data), event: e }));
+    }
+    element_value(element: JQuery): any
+    {
+        if (element.is(':checkbox')) 
+            return element.is(':checked');
+        if (element.is(':radio'))
+            return element.is(':checked') ? element.val() : null;
+        return element.val();
     }
     find_element(current: JQuery, path: PathEntry[]): JQuery
     {
