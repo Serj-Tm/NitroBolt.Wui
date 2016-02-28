@@ -83,9 +83,9 @@ namespace NitroBolt.WebSampler
                 (
                     h.data("name", "radio-container"),
                    h.Div("radio + container"),
-                   h.Input(h.type("radio"), h.Attribute("name", "x1"), h.data("name", "x"), h.value("v1"), h.onclick(";")), h.Span("V1"),
-                   h.Input(h.type("radio"), h.Attribute("name", "x1"), h.data("name", "x"), h.value("v2"), h.onclick(";"), h.@checked()), h.Span("V2"),
-                   h.Input(h.type("radio"), h.Attribute("name", "x1"), h.data("name", "x"), h.value("v3"), h.onclick(";")), h.Span("V3"),
+                   h.Input(h.type("radio"), h.Attribute("name", "x1"), h.data("name", "x"), h.value("v1")), h.Span("V1"),
+                   h.Input(h.type("radio"), h.Attribute("name", "x1"), h.data("name", "x"), h.value("v2"), h.@checked()), h.Span("V2"),
+                   h.Input(h.type("radio"), h.Attribute("name", "x1"), h.data("name", "x"), h.value("v3")), h.Span("V3"),
                    h.Input(h.data("name", "t"), h.type("text"), h.value("tt")),
                    h.Input(h.type("button"), h.value("send"), h.onclick(";"), new hdata { { "command", "x-container" }, { "container", "radio-container" } })
                 )
