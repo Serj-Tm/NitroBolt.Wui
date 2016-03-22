@@ -108,12 +108,14 @@ namespace NitroBolt.Wui
             }
             ).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
-        public HWebSynchronizeHandler(Dictionary<string, Func<object, JsonData[], HContext, HtmlResult<HElement>>> handlers)
+        public HWebSynchronizeHandler(Dictionary<string, Func<object, JsonData[], HContext, HtmlResult<HElement>>> handlers, Func<HElement, HElement> onFirstHtmlTransformer = null)
         {
             this.Handlers = handlers;
+            this.OnFirstHtmlTransformer = onFirstHtmlTransformer;
         }
         public readonly Dictionary<string, Func<object, JsonData[], HContext, HtmlResult<HElement>>> Handlers;
         public readonly Newtonsoft.Json.JsonSerializer JsonSerializer = Newtonsoft.Json.JsonSerializer.Create();
+        public readonly Func<HElement, HElement> OnFirstHtmlTransformer;
 
         public void ProcessRequest(HttpContext context)
         {
@@ -177,16 +179,32 @@ namespace NitroBolt.Wui
                 var page = result.Html;
                 if (!context.Request.Url.AbsolutePath.EndsWith(".raw.html"))
                 {
-                    var head = page.Element("head") ?? new HElement("head");
+                    if (OnFirstHtmlTransformer != null)
+                    {
+                        page = OnFirstHtmlTransformer(page);
+                        var update = PushUpdate(context, handlerName, page, result.State);
 
-                    var update = PushUpdate(context, handlerName, new HElement("html", head, new HElement("body")), result.State);
+                        var head = page.Element("head") ?? new HElement("head");
+                        var startHead = new HElement(head.Name,
+                          head.Attributes,
+                          head.Nodes,
+                          HWebSynchronizeHandler.Scripts_Inline(handlerName, update.Cycle, refreshPeriod: result.RefreshPeriod ?? TimeSpan.FromSeconds(10))
+                        );
+                        page = new HElement("html", page.Attributes, startHead, page.Nodes.Where(node => (node as HElement)?.Name?.LocalName != "head"));
+                    }
+                    else
+                    {
+                        var head = page.Element("head") ?? new HElement("head");
 
-                    var startHead = new HElement(head.Name,
-                      head.Attributes,
-                      head.Nodes,
-                      HWebSynchronizeHandler.Scripts_Inline(handlerName, update.Cycle, refreshPeriod: result.RefreshPeriod ?? TimeSpan.FromSeconds(10))
-                    );
-                    page = new HElement("html", startHead, new HElement("body"));
+                        var update = PushUpdate(context, handlerName, new HElement("html", head, new HElement("body")), result.State);
+
+                        var startHead = new HElement(head.Name,
+                          head.Attributes,
+                          head.Nodes,
+                          HWebSynchronizeHandler.Scripts_Inline(handlerName, update.Cycle, refreshPeriod: result.RefreshPeriod ?? TimeSpan.FromSeconds(10))
+                        );
+                        page = new HElement("html", startHead, new HElement("body"));
+                    }
                 }
 
                 context.Response.Write(page.ToString());
