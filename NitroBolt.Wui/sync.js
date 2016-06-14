@@ -1,4 +1,3 @@
-/// <reference path="ts/jquery.d.ts" />
 var ContainerSynchronizer = (function () {
     function ContainerSynchronizer(container, name, sync_refresh_period) {
         var _this = this;
@@ -71,7 +70,8 @@ var ContainerSynchronizer = (function () {
                 return null;
             var pentry = path[i];
             if (pentry.kind == 'element') {
-                current = current.children().eq(pentry.index);
+                var childs = current.children;
+                current = pentry.index < childs.length ? childs[pentry.index] : null;
             }
         }
         return current;
@@ -199,7 +199,7 @@ var ContainerSynchronizer = (function () {
         var len = commands.length;
         for (var i = 0; i < len; ++i) {
             var command = commands[i];
-            this.change_element(this.find_element(this.container, command.path), command.cmd, command.value);
+            this.change_element($(this.find_element(this.container.get(0), command.path)), command.cmd, command.value);
         }
     };
     ContainerSynchronizer.prototype.sync = function (data) {
@@ -257,7 +257,7 @@ var ContainerSynchronizer = (function () {
         'altKey', 'ctrlKey', 'metaKey', 'shiftKey'
     ];
     return ContainerSynchronizer;
-})();
+}());
 function JsPath() {
     var path = window.location.href;
     var questionIndex = path.indexOf('?');
@@ -270,24 +270,24 @@ var Command = (function () {
     function Command() {
     }
     return Command;
-})();
+}());
 var ElementDescription = (function () {
     function ElementDescription() {
     }
     return ElementDescription;
-})();
+}());
 var AttributeDescription = (function () {
     function AttributeDescription() {
     }
     return AttributeDescription;
-})();
+}());
 var TextDescription = (function () {
     function TextDescription() {
     }
     return TextDescription;
-})();
+}());
 var PathEntry = (function () {
     function PathEntry() {
     }
     return PathEntry;
-})();
+}());

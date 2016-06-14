@@ -92,7 +92,24 @@ class ContainerSynchronizer
             return element.is(':checked') ? element.val() : null;
         return element.val();
     }
-    find_element(current: JQuery, path: PathEntry[]): JQuery
+    //find_element(current: JQuery, path: PathEntry[]): JQuery
+    //{
+    //    var len = path.length;
+    //    for (var i: number = 0; i < len; ++i)
+    //    {
+    //        if (!current)
+    //            return null;
+    //        var pentry = path[i];
+    //        //    $('#log').append('find_element: ' +  i + ' ' + pentry.index);
+    //        if (pentry.kind == 'element')
+    //        {
+    //            current = current.children().eq(pentry.index);
+    //            //    $('#log').append('current_element: ' +  current);
+    //        }
+    //    }
+    //    return current;
+    //}
+    find_element(current: HTMLElement, path: PathEntry[]): HTMLElement
     {
         var len = path.length;
         for (var i: number = 0; i < len; ++i)
@@ -103,7 +120,9 @@ class ContainerSynchronizer
             //    $('#log').append('find_element: ' +  i + ' ' + pentry.index);
             if (pentry.kind == 'element')
             {
-                current = current.children().eq(pentry.index);
+                var childs = current.children;
+                //current = current.children().eq(pentry.index);
+                current = pentry.index < childs.length ? <HTMLElement>childs[pentry.index] : null;
                 //    $('#log').append('current_element: ' +  current);
             }
         }
@@ -273,7 +292,7 @@ class ContainerSynchronizer
         for (var i: number = 0; i < len; ++i)
         {
             var command = commands[i];
-            this.change_element(this.find_element(this.container, command.path), command.cmd, command.value);
+            this.change_element($(this.find_element(this.container.get(0), command.path)), command.cmd, command.value);
         }
     }
     sync(data): void
