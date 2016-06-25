@@ -54,7 +54,7 @@ var ContainerSynchronizer = (function () {
                 }
             }
         }
-        this.server_event(JSON.stringify({ value: this.element_value(element), checked: element.is(':checked'), data: $.extend(result_data, element_data, data), event: e }));
+        this.server_event({ value: this.element_value(element), checked: element.is(':checked'), data: $.extend(result_data, element_data, data), event: e });
     };
     ContainerSynchronizer.prototype.element_value = function (element) {
         if (element.is(':checkbox'))
@@ -222,7 +222,7 @@ var ContainerSynchronizer = (function () {
     };
     ContainerSynchronizer.prototype.server_event = function (json) {
         var _this = this;
-        this.commands.push(json);
+        this.commands.push((typeof json === 'string') ? JSON.parse(json) : json);
         $.post(this.js_path(), JSON.stringify({ 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands }), function (data) { return _this.sync(data); }, 'json');
     };
     ContainerSynchronizer.prototype.update_all = function () {

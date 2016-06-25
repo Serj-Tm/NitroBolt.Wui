@@ -82,7 +82,7 @@ class ContainerSynchronizer
                 }
             }
         }
-        this.server_event(JSON.stringify({ value: this.element_value(element), checked: element.is(':checked'), data: $.extend(result_data, element_data, data), event: e }));
+        this.server_event({ value: this.element_value(element), checked: element.is(':checked'), data: $.extend(result_data, element_data, data), event: e });
     }
     element_value(element: JQuery): any
     {
@@ -92,23 +92,7 @@ class ContainerSynchronizer
             return element.is(':checked') ? element.val() : null;
         return element.val();
     }
-    //find_element(current: JQuery, path: PathEntry[]): JQuery
-    //{
-    //    var len = path.length;
-    //    for (var i: number = 0; i < len; ++i)
-    //    {
-    //        if (!current)
-    //            return null;
-    //        var pentry = path[i];
-    //        //    $('#log').append('find_element: ' +  i + ' ' + pentry.index);
-    //        if (pentry.kind == 'element')
-    //        {
-    //            current = current.children().eq(pentry.index);
-    //            //    $('#log').append('current_element: ' +  current);
-    //        }
-    //    }
-    //    return current;
-    //}
+
     find_element(current: HTMLElement, path: PathEntry[]): HTMLElement
     {
         var len = path.length;
@@ -117,13 +101,10 @@ class ContainerSynchronizer
             if (!current)
                 return null;
             var pentry = path[i];
-            //    $('#log').append('find_element: ' +  i + ' ' + pentry.index);
             if (pentry.kind == 'element')
             {
                 var childs = current.children;
-                //current = current.children().eq(pentry.index);
                 current = pentry.index < childs.length ? <HTMLElement>childs[pentry.index] : null;
-                //    $('#log').append('current_element: ' +  current);
             }
         }
         return current;
@@ -323,11 +304,11 @@ class ContainerSynchronizer
     is_need_update: boolean = false;
     is_updating: boolean = false;
 
-    commands: string[] = [];
+    commands: Object[] = [];
 
-    server_event(json: string): void
+    server_event(json: string | Object): void
     {
-        this.commands.push(json);
+        this.commands.push((typeof json === 'string') ? JSON.parse(json) : json);
         $.post(this.js_path(), JSON.stringify({ 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands }), data => this.sync(data), 'json');
     }
 
