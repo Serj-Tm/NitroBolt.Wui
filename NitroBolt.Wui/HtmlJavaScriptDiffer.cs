@@ -17,7 +17,6 @@ namespace NitroBolt.Wui
             elementProvider.Attribute("http-equiv", "X-UA-Compatible"),
             elementProvider.Attribute("content", "IE=11")
            ),
-          elementProvider.Element("script", elementProvider.Attribute("src", "http://cdnjs.cloudflare.com/ajax/libs/json2/20121008/json2.min.js"), ""),
           isDebug 
             ? elementProvider.Element("script", elementProvider.Attribute("src", "http://code.jquery.com/jquery-1.10.2.js"), "")
             : elementProvider.Element("script", elementProvider.Attribute("src", "http://code.jquery.com/jquery-1.10.2.min.js"), ""),

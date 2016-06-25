@@ -9,10 +9,6 @@ namespace NitroBolt.Wui
 
     public class HWebSynchronizeHandler : IHttpHandler, System.Web.SessionState.IRequiresSessionState
     {
-        public static HElement[] Scripts(string frame = null, bool isDebug = false, TimeSpan? refreshPeriod = null, string syncJsName = null)
-        {
-            return HtmlJavaScriptDiffer.Scripts(new HElementProvider(), isDebug: isDebug, refreshPeriod: refreshPeriod, isInlineSyncScript: false, syncJsName: syncJsName, frame:frame);
-        }
 
         public static HElement[] Scripts_Inline(string handlerName, int cycle, bool isDebug = false, TimeSpan? refreshPeriod = null, string syncJsName = null)
         {
