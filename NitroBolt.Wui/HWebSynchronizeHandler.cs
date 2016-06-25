@@ -9,82 +9,14 @@ namespace NitroBolt.Wui
 
     public class HWebSynchronizeHandler : IHttpHandler, System.Web.SessionState.IRequiresSessionState
     {
+        public static HElement[] Scripts(string frame = null, bool isDebug = false, TimeSpan? refreshPeriod = null, string syncJsName = null)
+        {
+            return HtmlJavaScriptDiffer.Scripts(new HElementProvider(), isDebug: isDebug, refreshPeriod: refreshPeriod, isInlineSyncScript: false, syncJsName: syncJsName, frame:frame);
+        }
+
         public static HElement[] Scripts_Inline(string handlerName, int cycle, bool isDebug = false, TimeSpan? refreshPeriod = null, string syncJsName = null)
         {
             return HtmlJavaScriptDiffer.Scripts(new HElementProvider(), isDebug: isDebug, refreshPeriod: refreshPeriod, isInlineSyncScript: false, syncJsName:syncJsName);
-        }
-        [Obsolete]
-        public static HElement[] Scripts(string handlerName, int cycle, bool isDebug = false, TimeSpan? refreshPeriod = null, bool isInlineSyncScript = true)
-        {
-            return
-              (
-                isInlineSyncScript
-                ? new[]
-                {
-                    new HElement("script",
-                      new HAttribute("type", "text/javascript"),
-                      new HRaw(
-                      @"
-                      function server_event(json)
-                      {
-                        $.post('__HandlerName__.js?cycle=' + cycle, { 'cycle': cycle, 'values':json },
-                          function(data)
-                          {
-                            if (data.prev_cycle == cycle)
-                            {
-                              sync_page(data.commands);
-                              cycle = data.cycle;
-                            }
-                            else 
-                              update_page();
-                          }, 'json');
-                      }
-                      ".Replace("__HandlerName__", handlerName)
-                      )
-                    )
-                }
-                : Array<HElement>.Empty
-              )
-              .Concat(NitroBolt.Wui.HtmlJavaScriptDiffer.Scripts(new HElementProvider(), isDebug: isDebug, refreshPeriod: refreshPeriod, isInlineSyncScript: isInlineSyncScript))
-              .Concat(
-                isInlineSyncScript
-                ? new[]
-                  {
-                      new HElement("script",
-                        new HAttribute("type", "text/javascript"),
-                        new HRaw(string.Format("var cycle = {0};", cycle))
-                      ),
-                      new HElement("script",
-                        new HAttribute("type", "text/javascript"),
-                        new HRaw(
-                        @"
-                          function update_page()
-                          {
-                              try
-                              {
-                                $.getJSON('__HandlerName__.js?cycle=' + cycle + '&r=' + (1000 * Math.random() + '').substring(0,3), function(data) 
-                                 {
-                                    if (data.prev_cycle == cycle)
-                                    {
-                                      sync_page(data.commands);
-                                      cycle = data.cycle;
-                                    }
-                                    else 
-                                      update_page();
-                                 });
-                              }
-                              catch(e) {}
-                          }
-                          window.setInterval(update_page, __RefreshPeriod__);
-                          update_page();
-                        ".Replace("__HandlerName__", handlerName)
-                         .Replace("__RefreshPeriod__", ((int)(refreshPeriod ?? TimeSpan.FromSeconds(2)).TotalMilliseconds).ToString())
-                        )
-                      )
-                  }
-                : Array<HElement>.Empty
-              )
-              .ToArray();
         }
 
         [Obsolete("Use constructor with Func<.., JsonData[], ..>")]

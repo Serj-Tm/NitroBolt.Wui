@@ -9,7 +9,7 @@ namespace NitroBolt.Wui
 {
   public class HtmlJavaScriptDiffer
   {
-    public static TElement[] Scripts<TElement, TAttribute, TObject>(IElementProvider<TElement, TAttribute, TObject> elementProvider, bool isDebug = false, TimeSpan? refreshPeriod = null, bool isInlineSyncScript = true, string syncJsName = null)      
+    public static TElement[] Scripts<TElement, TAttribute, TObject>(IElementProvider<TElement, TAttribute, TObject> elementProvider, bool isDebug = false, TimeSpan? refreshPeriod = null, bool isInlineSyncScript = true, string syncJsName = null, string frame = null)
     {
       return new[]
         {
@@ -17,16 +17,10 @@ namespace NitroBolt.Wui
             elementProvider.Attribute("http-equiv", "X-UA-Compatible"),
             elementProvider.Attribute("content", "IE=11")
            ),
-          //<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-          elementProvider.Element("link", 
-            elementProvider.Attribute("rel", "stylesheet"),
-            elementProvider.Attribute("href", "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css")
-          ),
           elementProvider.Element("script", elementProvider.Attribute("src", "http://cdnjs.cloudflare.com/ajax/libs/json2/20121008/json2.min.js"), ""),
           isDebug 
             ? elementProvider.Element("script", elementProvider.Attribute("src", "http://code.jquery.com/jquery-1.10.2.js"), "")
             : elementProvider.Element("script", elementProvider.Attribute("src", "http://code.jquery.com/jquery-1.10.2.min.js"), ""),
-          elementProvider.Element("script", elementProvider.Attribute("src", "http://code.jquery.com/ui/1.10.3/jquery-ui.js"), ""),
           isInlineSyncScript 
           ? elementProvider.Element("script", 
             elementProvider.Attribute("type", "text/javascript"),
