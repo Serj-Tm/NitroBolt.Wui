@@ -223,16 +223,16 @@ var ContainerSynchronizer = (function () {
     ContainerSynchronizer.prototype.server_event = function (json) {
         var _this = this;
         this.commands.push(json);
-        $.post(this.js_path('cycle=' + this.cycle), { 'frame-id': this.id, 'cycle': this.cycle, 'commands': this.commands }, function (data) { return _this.sync(data); }, 'json');
+        $.post(this.js_path(), { 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands }, function (data) { return _this.sync(data); }, 'json');
     };
     ContainerSynchronizer.prototype.update_all = function () {
         var _this = this;
         try {
             if (this.commands.length > 0) {
-                $.post(this.js_path('cycle=' + this.cycle), { 'frame-id': this.id, 'cycle': this.cycle, 'commands': this.commands }, function (data) { return _this.sync(data); }, 'json');
+                $.post(this.js_path(), { 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands }, function (data) { return _this.sync(data); }, 'json');
             }
             else {
-                $.post(this.js_path('cycle=' + this.cycle), { 'frame-id': this.id, 'cycle': this.cycle }, function (data) { return _this.sync(data); }, 'json');
+                $.post(this.js_path(), { 'frame': this.id, 'cycle': this.cycle }, function (data) { return _this.sync(data); }, 'json');
             }
         }
         catch (e) {

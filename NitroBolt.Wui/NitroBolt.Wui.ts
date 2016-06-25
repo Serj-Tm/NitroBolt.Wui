@@ -328,7 +328,7 @@ class ContainerSynchronizer
     server_event(json: string): void
     {
         this.commands.push(json);
-        $.post(this.js_path('cycle=' + this.cycle), { 'frame-id': this.id, 'cycle': this.cycle, 'commands': this.commands }, data => this.sync(data), 'json');
+        $.post(this.js_path(), { 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands }, data => this.sync(data), 'json');
     }
 
     update_all(): void
@@ -337,11 +337,11 @@ class ContainerSynchronizer
         {
             if (this.commands.length > 0)
             {
-                $.post(this.js_path('cycle=' + this.cycle), { 'frame-id': this.id, 'cycle': this.cycle, 'commands': this.commands }, data => this.sync(data), 'json');
+                $.post(this.js_path(), { 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands }, data => this.sync(data), 'json');
             }
             else
             {
-                $.post(this.js_path('cycle=' + this.cycle), { 'frame-id': this.id, 'cycle': this.cycle}, data => this.sync(data), 'json');
+                $.post(this.js_path(), { 'frame': this.id, 'cycle': this.cycle}, data => this.sync(data), 'json');
                 //$.getJSON(this.js_path('cycle=' + this.cycle + '&r=' + (1000 * Math.random() + '').substring(0, 3)), data => this.sync(data));
             }
         }
@@ -350,7 +350,7 @@ class ContainerSynchronizer
             console.log(e);
         }
     }
-    js_path(query: string): string
+    js_path(query?: string): string
     {
         var path = this.container_name;
         if (path == null)
