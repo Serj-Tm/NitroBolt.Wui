@@ -16,7 +16,7 @@ namespace NitroBolt.Wui
         {
             //context.Response.Write(Scripts().Select(script => script.ToHtmlText()).JoinToString(null));
             context.Response.ContentType = "application/javascript";
-            context.Response.Write(ScriptResource.sync_js);
+            context.Response.Write(ScriptResource.NitroBolt_Wui_js);
         }
 
     }

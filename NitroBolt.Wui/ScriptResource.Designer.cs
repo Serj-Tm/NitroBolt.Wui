@@ -61,8 +61,7 @@ namespace NitroBolt.Wui {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /// &lt;reference path=&quot;ts/jquery.d.ts&quot; /&gt;
-        ///var ContainerSynchronizer = (function () {
+        ///   Looks up a localized string similar to var ContainerSynchronizer = (function () {
         ///    function ContainerSynchronizer(container, name, sync_refresh_period) {
         ///        var _this = this;
         ///        if (container === void 0) { container = null; }
@@ -72,11 +71,11 @@ namespace NitroBolt.Wui {
         ///        this.is_need_update = false;
         ///        this.is_updating = false;
         ///        this.commands = [];
-        ///        thi [rest of string was truncated]&quot;;.
+        ///        this.container = container != null ? $(conta [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string sync_js {
+        internal static string NitroBolt_Wui_js {
             get {
-                return ResourceManager.GetString("sync_js", resourceCulture);
+                return ResourceManager.GetString("NitroBolt_Wui_js", resourceCulture);
             }
         }
     }

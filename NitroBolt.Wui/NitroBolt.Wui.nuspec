@@ -12,4 +12,9 @@
     <projectUrl>https://github.com/Serj-Tm/NitroBolt.Wui</projectUrl>
     <tags>Asp.Net Server-Side React Wui</tags>
   </metadata>
+  <files>
+    <file src="bin\$configuration$\NitroBolt.Wui.dll" target="lib\" />
+    <file src="NitroBolt.Wui.js" target="content\scripts\" />
+  </files>
+
 </package>
