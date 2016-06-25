@@ -9,7 +9,7 @@ namespace NitroBolt.Wui
 {
   public class HtmlJavaScriptDiffer
   {
-    public static TElement[] Scripts<TElement, TAttribute, TObject>(IElementProvider<TElement, TAttribute, TObject> elementProvider, bool isDebug = false, TimeSpan? refreshPeriod = null, bool isInlineSyncScript = true)      
+    public static TElement[] Scripts<TElement, TAttribute, TObject>(IElementProvider<TElement, TAttribute, TObject> elementProvider, bool isDebug = false, TimeSpan? refreshPeriod = null, bool isInlineSyncScript = true, string syncJsName = null)      
     {
       return new[]
         {
@@ -33,7 +33,7 @@ namespace NitroBolt.Wui
             elementProvider.Raw(SyncScript)
           )
           : default(TElement),
-          isInlineSyncScript ? default(TElement) : elementProvider.Element("script", elementProvider.Attribute("src", "/sync.js"), ""),
+          isInlineSyncScript ? default(TElement) : elementProvider.Element("script", elementProvider.Attribute("src", (!syncJsName.IsNullOrEmpty() && !syncJsName.StartsWith("/") ? "/" + syncJsName : syncJsName) ?? "/sync.js"), ""),
           isInlineSyncScript ? default(TElement) : elementProvider.Element("script", "$(function(){new ContainerSynchronizer(__ARGS__);});".Replace("__ARGS__", refreshPeriod != null ? "null, null, " + refreshPeriod.Value.TotalMilliseconds.ToString("f0") : "" ))
         };
     }
@@ -256,7 +256,7 @@ function sync_page_from_json(json)
     //{
     //  throw new NotImplementedException();
     //}
-    static readonly HBuilder h = null;
+    //static readonly HBuilder h = null;
 
     public static IEnumerable<object> JsSync<TElement, TAttribute, TObject>(IElementProvider<TElement, TAttribute, TObject> elementProvider, TElement oldBody, TElement body, params object[] path)
     {

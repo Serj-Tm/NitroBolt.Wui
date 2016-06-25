@@ -14,7 +14,7 @@
   </metadata>
   <files>
     <file src="bin\$configuration$\NitroBolt.Wui.dll" target="lib\" />
-    <file src="NitroBolt.Wui.js" target="content\scripts\" />
+    <file src="NitroBolt.Wui.js" target="content\Scripts\" />
   </files>
 
 </package>
