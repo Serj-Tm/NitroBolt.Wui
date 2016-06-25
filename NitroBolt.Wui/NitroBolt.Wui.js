@@ -232,7 +232,7 @@ var ContainerSynchronizer = (function () {
                 $.post(this.js_path('cycle=' + this.cycle), { 'frame-id': this.id, 'cycle': this.cycle, 'commands': this.commands }, function (data) { return _this.sync(data); }, 'json');
             }
             else {
-                $.getJSON(this.js_path('cycle=' + this.cycle + '&r=' + (1000 * Math.random() + '').substring(0, 3)), function (data) { return _this.sync(data); });
+                $.post(this.js_path('cycle=' + this.cycle), { 'frame-id': this.id, 'cycle': this.cycle }, function (data) { return _this.sync(data); }, 'json');
             }
         }
         catch (e) {
@@ -260,11 +260,7 @@ var ContainerSynchronizer = (function () {
 }());
 function JsPath() {
     var path = window.location.href;
-    var questionIndex = path.indexOf('?');
-    if (questionIndex < 0)
-        questionIndex = path.length;
-    var slashIndex = path.indexOf('/', path.indexOf('//') + 2);
-    return path.substring(0, questionIndex) + (slashIndex < 0 ? '/' : '') + (slashIndex + 1 == questionIndex ? 'index.html' : '') + '.js' + path.substring(questionIndex);
+    return path;
 }
 var Command = (function () {
     function Command() {
