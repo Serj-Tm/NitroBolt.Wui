@@ -14,9 +14,11 @@ namespace NitroBolt.Wui
 {
     public static class HWebApiSynchronizeHandler
     {
+        public static readonly string NitroBolt_Wui_js = "/Scripts/NitroBolt.Wui.18.js";
+
         public static HElement[] Scripts(string frame = null, bool isDebug = false, TimeSpan? refreshPeriod = null, string syncJsName = null)
         {
-            return HtmlJavaScriptDiffer.Scripts(new HElementProvider(), isDebug: isDebug, refreshPeriod: refreshPeriod, isInlineSyncScript: false, syncJsName: syncJsName, frame: frame);
+            return HtmlJavaScriptDiffer.Scripts(new HElementProvider(), isDebug: isDebug, refreshPeriod: refreshPeriod, isInlineSyncScript: false, syncJsName: syncJsName ?? NitroBolt_Wui_js, frame: frame);
         }
 
         public static HttpResponseMessage Process<TState>(HttpRequestMessage request, Func<TState, JsonData[], HttpRequestMessage, HtmlResult<HElement>> page) where TState : class, new()
