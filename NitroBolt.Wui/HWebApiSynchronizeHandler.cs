@@ -14,7 +14,7 @@ namespace NitroBolt.Wui
 {
     public static class HWebApiSynchronizeHandler
     {
-        public static readonly string NitroBolt_Wui_js = "/Scripts/NitroBolt.Wui.2.0.11.js";
+        public static readonly string NitroBolt_Wui_js = "/Scripts/NitroBolt.Wui.2.0.12.js";
 
         public static HElement[] Scripts(string frame = null, bool isDebug = false, TimeSpan? refreshPeriod = null, string syncJsName = null)
         {
@@ -55,7 +55,10 @@ namespace NitroBolt.Wui
                 var result = page(prev?.Item2?.State.As<TState>() ?? new TState(), json_commands, request);
                 watch.Stop();
 
-                var js_updates = HtmlJavaScriptDiffer.JsSync(new HElementProvider(), prev?.Item2?.Page?.Element("body"), result.Html?.Element("body")).ToArray();
+                var isPartial = result.Html.Name.LocalName != "html";
+                var toBody = isPartial ? html => html : (Func<HElement, HElement>)(html => html?.Element("body"));
+
+                var js_updates = HtmlJavaScriptDiffer.JsSync(new HElementProvider(), toBody(prev?.Item2?.Page), toBody(result.Html)).ToArray();
                 var jupdate = new Dictionary<string, object>() { { "cycle", prev.Item1 }, { "prev_cycle", cycle }, { "processed_commands", json_commands.Length }, { "updates", js_updates } };
 
                 PushUpdate(frame, prev.Item1, result.Html, result.State, watch.Elapsed);

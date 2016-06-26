@@ -14,7 +14,7 @@ class ContainerSynchronizer
         //this.server_event = server_event == null ? this.server_web_event : server_event;
         this.container_name = name;
         this.sync_refresh_period = sync_refresh_period;
-        this.id = id ?? Math.random().toString();
+        this.id = id != null ? id :  Math.random().toString();
 
         window.setInterval(() => this.update_all(), this.sync_refresh_period);
         window.setInterval(() =>
