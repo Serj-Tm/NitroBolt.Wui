@@ -25,30 +25,43 @@ namespace NitroBolt.Wui
         {
             if (request.Method == HttpMethod.Get)
             {
-                var firstResult = page(new TState(), Array<JsonData>.Empty, request);
-                return new HttpResponseMessage() { Content = new StringContent(firstResult.Html.ToHtmlText(), System.Text.Encoding.UTF8, "text/html") };
+                var result = page(new TState(), Array<JsonData>.Empty, request);
+
+                var html = result.Html;
+                var head = html.Element("head") ?? new HElement("head");
+
+                var startHead = new HElement(head.Name,
+                                         head.Attributes,
+                                         head.Nodes,
+                                         Scripts(frame:Guid.NewGuid().ToString(), refreshPeriod: result.RefreshPeriod ?? TimeSpan.FromSeconds(10))
+                                       );
+                html = new HElement("html", startHead, new HElement("body"));
+                return new HttpResponseMessage() { Content = new StringContent(html.ToHtmlText(), System.Text.Encoding.UTF8, "text/html") };
             }
+            else
+            {
 
-            var json = Parse(request.Content.ReadAsStringAsync().Result);
+                var json = Parse(request.Content.ReadAsStringAsync().Result);
 
-            var route = request.GetRouteData().Route.RouteTemplate;
+                var route = request.GetRouteData().Route.RouteTemplate;
 
-            var frame = route + ":" + json.JPath("frame")?.ToString();
-            var cycle = ConvertHlp.ToInt(json.JPath("cycle")).OrDefault(0);
-            var prev = PopUpdate(frame, cycle);
+                var frame = route + ":" + json.JPath("frame")?.ToString();
+                var cycle = ConvertHlp.ToInt(json.JPath("cycle")).OrDefault(0);
+                var prev = PopUpdate(frame, cycle);
 
-            var json_commands = (json.JPath("commands").As<JArray>()?.Select(j => new JsonData(j)).ToArray()).OrEmpty();
+                var json_commands = (json.JPath("commands").As<JArray>()?.Select(j => new JsonData(j)).ToArray()).OrEmpty();
 
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            var result = page(prev?.Item2?.State.As<TState>() ?? new TState(), json_commands, request);
-            watch.Stop();
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                var result = page(prev?.Item2?.State.As<TState>() ?? new TState(), json_commands, request);
+                watch.Stop();
 
-            var js_updates = HtmlJavaScriptDiffer.JsSync(new HElementProvider(), prev?.Item2?.Page?.Element("body"), result.Html?.Element("body")).ToArray();
-            var jupdate = new Dictionary<string, object>() { { "cycle", prev.Item1 }, { "prev_cycle", cycle }, { "processed_commands", json_commands.Length }, { "updates", js_updates } };
+                var js_updates = HtmlJavaScriptDiffer.JsSync(new HElementProvider(), prev?.Item2?.Page?.Element("body"), result.Html?.Element("body")).ToArray();
+                var jupdate = new Dictionary<string, object>() { { "cycle", prev.Item1 }, { "prev_cycle", cycle }, { "processed_commands", json_commands.Length }, { "updates", js_updates } };
 
-            PushUpdate(frame, prev.Item1, result.Html, result.State, watch.Elapsed);
+                PushUpdate(frame, prev.Item1, result.Html, result.State, watch.Elapsed);
 
-            return new HttpResponseMessage() { Content = new StringContent(JsonConvert.SerializeObject(jupdate), System.Text.Encoding.UTF8, "application/javascript") };
+                return new HttpResponseMessage() { Content = new StringContent(JsonConvert.SerializeObject(jupdate), System.Text.Encoding.UTF8, "application/javascript") };
+            }
         }
 
         static JsonData Parse(string t)
