@@ -99,13 +99,13 @@
     <Compile Include="Desktop\XHDesktopSynchronizer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="NitroBolt.Wui.18.ts" />
+    <TypeScriptCompile Include="NitroBolt.Wui.2.0.9.ts" />
     <TypeScriptCompile Include="ts\jquery.d.ts" />
     <TypeScriptCompile Include="ts\server_event.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NitroBolt.Wui.nuspec" />
-    <None Include="NitroBolt.Wui.18.js" />
+    <None Include="NitroBolt.Wui.2.0.9.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ScriptResource.resx">
