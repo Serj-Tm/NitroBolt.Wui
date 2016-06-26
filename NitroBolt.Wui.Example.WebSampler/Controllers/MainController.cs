@@ -6,12 +6,21 @@ using System.Xml.XPath;
 using System.Xml.Linq;
 using NitroBolt.Wui;
 using NitroBolt.Functional;
+using System.Net.Http;
+using System.Web.Http;
 
 namespace NitroBolt.WebSampler
 {
-    public class Main
+    public class MainController:ApiController
     {
-        public static NitroBolt.Wui.HtmlResult<HElement> HView(object _state, JsonData[] jsons, HContext context)
+        [HttpGet, HttpPost]
+        [Route("")]
+        public HttpResponseMessage Route()
+        {
+            return HWebApiSynchronizeHandler.Process<object>(this.Request, HView);
+        }
+
+        public static NitroBolt.Wui.HtmlResult<HElement> HView(object _state, JsonData[] jsons, HttpRequestMessage request)
         {
             var state = _state.As<MainState>() ?? new MainState();
 

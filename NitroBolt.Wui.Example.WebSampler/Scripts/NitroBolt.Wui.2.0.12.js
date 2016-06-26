@@ -12,7 +12,7 @@ var ContainerSynchronizer = (function () {
         this.container = container != null ? $(container) : $('body');
         this.container_name = name;
         this.sync_refresh_period = sync_refresh_period;
-        this.id = id ?  ? Math.random().toString() :  : ;
+        this.id = id != null ? id : Math.random().toString();
         window.setInterval(function () { return _this.update_all(); }, this.sync_refresh_period);
         window.setInterval(function () {
             if (_this.is_need_update) {

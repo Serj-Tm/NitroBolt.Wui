@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui", "NitroBolt.Wui\NitroBolt.Wui.csproj", "{6ADEFD5A-BB8A-44F8-9E8E-CDFBD0ABC510}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Example.WebSampler", "NitroBolt.Wui.Example.WebSampler\NitroBolt.Wui.Example.WebSampler.csproj", "{D6D3E3D6-B70D-48B6-A1DF-D386669372D6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Tests", "NitroBolt.Wui.Tests\NitroBolt.Wui.Tests.csproj", "{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1DFEFEC9-894D-4FDE-8859-23B7D5CC0EC6}"
@@ -15,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Example.WebStateMachine", "NitroBolt.Wui.Example.WebStateMachine\NitroBolt.Wui.Example.WebStateMachine.csproj", "{17775536-422C-480B-B78E-5398BD1422D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Example.WebSampler", "NitroBolt.Wui.Example.WebSampler\NitroBolt.Wui.Example.WebSampler.csproj", "{0104937D-B001-4505-B0FD-84C377F5051A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +26,6 @@ Global
 		{6ADEFD5A-BB8A-44F8-9E8E-CDFBD0ABC510}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6ADEFD5A-BB8A-44F8-9E8E-CDFBD0ABC510}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6ADEFD5A-BB8A-44F8-9E8E-CDFBD0ABC510}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D6D3E3D6-B70D-48B6-A1DF-D386669372D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6D3E3D6-B70D-48B6-A1DF-D386669372D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6D3E3D6-B70D-48B6-A1DF-D386669372D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6D3E3D6-B70D-48B6-A1DF-D386669372D6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -38,6 +34,10 @@ Global
 		{17775536-422C-480B-B78E-5398BD1422D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17775536-422C-480B-B78E-5398BD1422D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17775536-422C-480B-B78E-5398BD1422D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0104937D-B001-4505-B0FD-84C377F5051A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0104937D-B001-4505-B0FD-84C377F5051A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0104937D-B001-4505-B0FD-84C377F5051A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0104937D-B001-4505-B0FD-84C377F5051A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
