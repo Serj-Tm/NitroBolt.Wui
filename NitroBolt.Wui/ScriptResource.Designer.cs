@@ -62,16 +62,17 @@ namespace NitroBolt.Wui {
         
         /// <summary>
         ///   Looks up a localized string similar to var ContainerSynchronizer = (function () {
-        ///    function ContainerSynchronizer(container, name, sync_refresh_period) {
+        ///    function ContainerSynchronizer(container, name, sync_refresh_period, id) {
         ///        var _this = this;
         ///        if (container === void 0) { container = null; }
         ///        if (name === void 0) { name = null; }
         ///        if (sync_refresh_period === void 0) { sync_refresh_period = 10 * 1000; }
+        ///        if (id === void 0) { id = null; }
         ///        this.cycle = 0;
         ///        this.is_need_update = false;
         ///        this.is_updating = false;
         ///        this.commands = [];
-        ///        this.container = container != null ? $(conta [rest of string was truncated]&quot;;.
+        ///      [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string NitroBolt_Wui_js {
             get {

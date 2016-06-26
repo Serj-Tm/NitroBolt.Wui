@@ -8,13 +8,13 @@ interface ServerEvent
 
 class ContainerSynchronizer
 {
-    constructor(container: JQuery = null, name: string = null, sync_refresh_period: number = 10 * 1000)
+    constructor(container: JQuery = null, name: string = null, sync_refresh_period: number = 10 * 1000, id:string = null)
     {
         this.container = container != null ? $(container) : $('body');
         //this.server_event = server_event == null ? this.server_web_event : server_event;
         this.container_name = name;
         this.sync_refresh_period = sync_refresh_period;
-        this.id = Math.random().toString();
+        this.id = id ?? Math.random().toString();
 
         window.setInterval(() => this.update_all(), this.sync_refresh_period);
         window.setInterval(() =>
@@ -335,7 +335,7 @@ class ContainerSynchronizer
     {
         var path = this.container_name;
         if (path == null)
-            path = JsPath();
+            path = window.location.href;
         if (query != null && query != '')
         {
             if (path.indexOf('?') < 0)
@@ -347,16 +347,16 @@ class ContainerSynchronizer
     }
 }
 
-function JsPath(): string
-{
-    var path = window.location.href;
-    return path;
-    //var questionIndex = path.indexOf('?');
-    //if (questionIndex < 0)
-    //    questionIndex = path.length;
-    //var slashIndex = path.indexOf('/', path.indexOf('//') + 2);
-    //return path.substring(0, questionIndex) + (slashIndex < 0 ? '/' : '') +  (slashIndex + 1 == questionIndex ? 'index.html' : '') + '.js' + path.substring(questionIndex);
-}
+//function JsPath(): string
+//{
+//    var path = window.location.href;
+//    return path;
+//    //var questionIndex = path.indexOf('?');
+//    //if (questionIndex < 0)
+//    //    questionIndex = path.length;
+//    //var slashIndex = path.indexOf('/', path.indexOf('//') + 2);
+//    //return path.substring(0, questionIndex) + (slashIndex < 0 ? '/' : '') +  (slashIndex + 1 == questionIndex ? 'index.html' : '') + '.js' + path.substring(questionIndex);
+//}
 
 //function init_sync_container(container)
 //{

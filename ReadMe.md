@@ -1,20 +1,21 @@
-# NitroBolt.Wui
+п»ї# NitroBolt.Wui
 C# Server-Side React
 
-Создание проекта
-1. Создать новый проект Asp.net с поддержкой Web Api 2
+## РЎРѕР·РґР°РЅРёРµ РїСЂРѕРµРєС‚Р°
+### 1. РЎРѕР·РґР°С‚СЊ РЅРѕРІС‹Р№ РїСЂРѕРµРєС‚ Asp.net СЃ РїРѕРґРґРµСЂР¶РєРѕР№ Web Api 2
 New Project -> Visual c# -> Windows -> Web -> Asp.net:
   Asp.net 4.5 template -> Empty project (Web Api: checked)
 2. Install-Package NitroBolt.Wui
 
-Перенос проекта с NitroBolt.Wui 1.x
-1. Каждый класс View
-  a. Скопировать
-  b. Переименовать в Controller и отнаследовать от ApiController
-  c. Поменять тип в HView с HttpContent на HttpRequestMessage
-  d. Добавить Route
+## РџРµСЂРµРЅРѕСЃ РїСЂРѕРµРєС‚Р° СЃ NitroBolt.Wui 1.x
+1. РљР°Р¶РґС‹Р№ РєР»Р°СЃСЃ View
+  a. РЎРєРѕРїРёСЂРѕРІР°С‚СЊ
+  b. РџРµСЂРµРёРјРµРЅРѕРІР°С‚СЊ РІ Controller Рё РѕС‚РЅР°СЃР»РµРґРѕРІР°С‚СЊ РѕС‚ ApiController
+  c. РџРѕРјРµРЅСЏС‚СЊ С‚РёРї РІ HView СЃ HttpContent РЅР° HttpRequestMessage
+  d. Р”РѕР±Р°РІРёС‚СЊ Route
+
         [HttpGet, HttpPost]
-        [Route(<Название>)]
+        [Route(<РќР°Р·РІР°РЅРёРµ>)]
         public HttpResponseMessage Route()
         {
             return HWebApiSynchronizeHandler.Process<MainState>(this.Request, HView);
