@@ -36,7 +36,7 @@ namespace NitroBolt.Wui
                                          Scripts(frame:Guid.NewGuid().ToString(), refreshPeriod: result.RefreshPeriod ?? TimeSpan.FromSeconds(10))
                                        );
                 html = new HElement("html", startHead, new HElement("body"));
-                return new HttpResponseMessage() { Content = new StringContent(html.ToHtmlText(), System.Text.Encoding.UTF8, "text/html") };
+                return ApplyProcessor(new HttpResponseMessage() { Content = new StringContent(html.ToHtmlText(), System.Text.Encoding.UTF8, "text/html") }, result);
             }
             else
             {
@@ -63,8 +63,18 @@ namespace NitroBolt.Wui
 
                 PushUpdate(frame, prev.Item1, result.Html, result.State, watch.Elapsed);
 
-                return new HttpResponseMessage() { Content = new StringContent(JsonConvert.SerializeObject(jupdate), System.Text.Encoding.UTF8, "application/javascript") };
+                return ApplyProcessor(new HttpResponseMessage() { Content = new StringContent(JsonConvert.SerializeObject(jupdate), System.Text.Encoding.UTF8, "application/javascript") }, null);
             }
+        }
+        static HttpResponseMessage ApplyProcessor(HttpResponseMessage response, HtmlResult<HElement> result)
+        {
+            var apiResult = result as HtmlApiResult<HElement>;
+            if (apiResult != null && apiResult.ResponseProcessor != null)
+            {
+                apiResult.ResponseProcessor(response);
+            }
+
+            return response;
         }
 
         static JsonData Parse(string t)
@@ -143,5 +153,10 @@ namespace NitroBolt.Wui
             public readonly TimeSpan Elapsed;
         }
 
+    }
+
+    public class HtmlApiResult<TElement>:HtmlResult<TElement>
+    {
+        public Action<HttpResponseMessage> ResponseProcessor = null;
     }
 }
