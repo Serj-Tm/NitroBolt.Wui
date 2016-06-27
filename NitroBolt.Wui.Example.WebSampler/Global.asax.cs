@@ -13,5 +13,7 @@ namespace NitroBolt.Wui.Example.WebSampler
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
         }
+
+ 
     }
 }

@@ -347,27 +347,6 @@ class ContainerSynchronizer
     }
 }
 
-//function JsPath(): string
-//{
-//    var path = window.location.href;
-//    return path;
-//    //var questionIndex = path.indexOf('?');
-//    //if (questionIndex < 0)
-//    //    questionIndex = path.length;
-//    //var slashIndex = path.indexOf('/', path.indexOf('//') + 2);
-//    //return path.substring(0, questionIndex) + (slashIndex < 0 ? '/' : '') +  (slashIndex + 1 == questionIndex ? 'index.html' : '') + '.js' + path.substring(questionIndex);
-//}
-
-//function init_sync_container(container)
-//{
-//  window.setInterval(function () { update_container(container); }, (typeof sync_refresh_period === 'undefined') ? 60 * 1000 : sync_refresh_period);
-//  update_container(container);
-//}
-//function sync_container_from_json(container: JQuery, json:string)
-//{
-//  sync_container(container, $.parseJSON(json));
-//  return true;
-//}
 
 
 class Command
