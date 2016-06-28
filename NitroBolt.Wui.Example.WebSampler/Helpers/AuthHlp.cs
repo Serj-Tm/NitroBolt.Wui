@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Principal;
 using System.Threading;
 using System.Web;
 
@@ -16,9 +17,15 @@ namespace NitroBolt.WebSampler
             return request?.GetRequestContext()?.Principal?.Identity?.Name.EmptyAsNull();
         }
 
+        public static IPrincipal ToPrincipal(string login)
+        {
+            return login != null ? new GenericPrincipal(new System.Security.Principal.GenericIdentity(login), Array<string>.Empty) : null;
+        }
+
         public static Action<HttpResponseMessage> SetUserAndGetCookieSetter(this HttpRequestMessage request, string login)
         {
-            var principal = login != null ? new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(login), Array<string>.Empty): null;
+            var principal = ToPrincipal(login);
+
             HttpContext.Current.User = principal;
             Thread.CurrentPrincipal = principal;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace NitroBolt.Wui.Example.WebSampler
+namespace NitroBolt.WebSampler
 {
     public static class WebApiConfig
     {
@@ -13,6 +13,8 @@ namespace NitroBolt.Wui.Example.WebSampler
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+
+            config.Filters.Add(new AuthenticationFilter());
 
         }
     }

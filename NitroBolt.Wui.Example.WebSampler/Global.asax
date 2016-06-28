@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="NitroBolt.Wui.Example.WebSampler.WebApiApplication" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="NitroBolt.WebSampler.WebApiApplication" Language="C#" %>

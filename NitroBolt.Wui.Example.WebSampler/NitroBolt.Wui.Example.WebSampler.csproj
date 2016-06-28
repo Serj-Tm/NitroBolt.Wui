@@ -13,7 +13,7 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NitroBolt.Wui.Example.WebSampler</RootNamespace>
+    <RootNamespace>NitroBolt.WebSampler</RootNamespace>
     <AssemblyName>NitroBolt.Wui.Example.WebSampler</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
@@ -56,8 +56,8 @@
       <HintPath>..\packages\NitroBolt.Functional.1.0.17\lib\net45\NitroBolt.Functional.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NitroBolt.Wui, Version=2.0.17.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NitroBolt.Wui.2.0.17-alpha\lib\net45\NitroBolt.Wui.dll</HintPath>
+    <Reference Include="NitroBolt.Wui, Version=2.0.19.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NitroBolt.Wui.2.0.19-alpha\lib\net45\NitroBolt.Wui.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Collections.Immutable, Version=1.1.36.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -105,6 +105,7 @@
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\Part1Controller.cs" />
     <Compile Include="Controllers\Part2Controller.cs" />
+    <Compile Include="Filters\AuthenticationFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

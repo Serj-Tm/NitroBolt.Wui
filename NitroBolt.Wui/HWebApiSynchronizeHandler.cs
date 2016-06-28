@@ -37,7 +37,7 @@ namespace NitroBolt.Wui
                                        );
                 //html = new HElement("html", startHead, new HElement("body"));
                 var firstHtmlTransformer = result.As<HtmlResult>()?.FirstHtmlTransformer ?? FirstHtmlTransformer;
-                html = firstHtmlTransformer(html);
+                html = firstHtmlTransformer(new HElement("html", startHead, html.Nodes.Where(node => node.As<HElement>()?.Name.LocalName != "head")));
                 var toHtmlText = result.As<HtmlResult>()?.ToHtmlText ?? ToHtmlText;
                 return ApplyProcessor(new HttpResponseMessage() { Content = new StringContent(toHtmlText(html), Encoding.UTF8, "text/html") }, result);
             }

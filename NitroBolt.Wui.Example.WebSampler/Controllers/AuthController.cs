@@ -64,7 +64,7 @@ namespace NitroBolt.WebSampler
 
 
             var page = Page(logins, account, request);
-            return new HtmlApiResult<HElement>
+            return new HtmlResult
             {
                 Html = page,
                 State = null,
