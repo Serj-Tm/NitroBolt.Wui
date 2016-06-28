@@ -46,7 +46,7 @@ namespace NitroBolt.Wui
 
                 var json = Parse(request.Content.ReadAsStringAsync().Result);
 
-                var route = request.GetRouteData().Route.RouteTemplate;
+                var route = request.GetRouteData()?.Route?.RouteTemplate ?? "<null>";
 
                 var frame = route + ":" + json.JPath("frame")?.ToString();
                 var cycle = ConvertHlp.ToInt(json.JPath("cycle")).OrDefault(0);
@@ -66,7 +66,7 @@ namespace NitroBolt.Wui
 
                 PushUpdate(frame, prev.Item1, result.Html, result.State, watch.Elapsed);
 
-                return ApplyProcessor(new HttpResponseMessage() { Content = new StringContent(JsonConvert.SerializeObject(jupdate), Encoding.UTF8, "application/javascript") }, null);
+                return ApplyProcessor(new HttpResponseMessage() { Content = new StringContent(JsonConvert.SerializeObject(jupdate), Encoding.UTF8, "application/javascript") }, result);
             }
         }
         static HElement FirstHtmlTransformer(HElement element)
