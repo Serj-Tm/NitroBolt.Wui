@@ -69,7 +69,6 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -77,26 +76,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HWebApiSynchronizeHandler.cs" />
-    <Compile Include="HWebSynchronizeHandler.cs" />
-    <Compile Include="Fcgi\FcgiServer.cs" />
-    <Compile Include="Fcgi\FcgiSynchronizer.cs" />
     <Compile Include="HBuilder.cs" />
     <Compile Include="HConverter.cs" />
-    <Compile Include="Desktop\HDesktopSynchronizer.cs" />
     <Compile Include="HDocument.cs" />
-    <Compile Include="Desktop\HtmlDesktopSynchronizer.cs" />
     <Compile Include="HtmlJavaScriptDiffer.cs" />
-    <Compile Include="Desktop\InternetExplorerWebBrowserHelper.cs" />
     <Compile Include="JsonData.cs" />
-    <Compile Include="Desktop\PluggableProtocol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScriptResource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ScriptResource.resx</DependentUpon>
-    </Compile>
-    <Compile Include="SyncScriptHandler.cs" />
-    <Compile Include="Desktop\XHDesktopSynchronizer.cs" />
+    <Compile Include="XRaw.cs" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="NitroBolt.Wui.2.0.12.ts" />
@@ -108,25 +94,7 @@
     <None Include="NitroBolt.Wui.2.0.12.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ScriptResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ScriptResource.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="MSHTML">
-      <Guid>{3050F1C5-98B5-11CF-BB82-00AA00BDCE0B}</Guid>
-      <VersionMajor>4</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
