@@ -90,7 +90,7 @@ namespace NitroBolt.WebSampler
                 h.Input(h.type("text"), h.Attribute("onkeyup", ";"), new hdata { { "command", "text" } }),
                 h.Input(h.type("button"), h.onclick(";"), new hdata { { "command", "error" } }, h.value("throw error")),
                 h.Div(state.Text),
-                h.Div(h.A(h.href(""), "main"), h.Span("("), h.A(h.href("main-raw"), "raw"), h.Span(")"), h.A(h.href("#"), "self-link", h.onclick("e.stopPropagation();"), h.data("command", "link"))),
+                h.Div(h.A(h.href("./"), "main"), h.Span("("), h.A(h.href("main-raw"), "raw"), h.Span(")"), h.A(h.href("#"), "self-link", h.onclick("e.stopPropagation();"), h.data("command", "link"))),
                 h.Div(h.A(h.href("multi.html"), "multi sync frames")),
                 h.Div(h.A(h.href("auth?id=12"), "auth-view")),
               //h.Div(DateTime.UtcNow),

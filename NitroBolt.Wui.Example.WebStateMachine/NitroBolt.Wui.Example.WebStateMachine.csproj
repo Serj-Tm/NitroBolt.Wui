@@ -56,8 +56,8 @@
       <HintPath>..\packages\NitroBolt.Functional.1.0.17\lib\net45\NitroBolt.Functional.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NitroBolt.Wui, Version=2.0.17.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NitroBolt.Wui.2.0.17-alpha\lib\net45\NitroBolt.Wui.dll</HintPath>
+    <Reference Include="NitroBolt.Wui, Version=2.0.24.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NitroBolt.Wui.2.0.24\lib\net45\NitroBolt.Wui.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Collections.Immutable, Version=1.1.36.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
