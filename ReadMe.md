@@ -6,18 +6,26 @@ C# Server-Side React
     
   New Project -> Visual C# -> Windows -> Web -> Asp.net Web Application:  Asp.net 4.5 Templates -> Empty (Web Api: checked)
 2. Install-Package NitroBolt.Wui
+3. Добавить Controller, отнаследованный от ApiController
+4. Добавить метод View с сигнатурой `static HtmlResult<HElement> View(MainState state, JsonData[] commands, HttpRequestMessage request)`
+5. Добавить Route
+
+    [HttpGet, HttpPost]
+    [Route(<Название>)]
+    public HttpResponseMessage Route()
+    {
+        return HWebApiSynchronizeHandler.Process<object>(this.Request, View);
+    }
 
 ## Перенос проекта с NitroBolt.Wui 1.x
-1. Каждый класс View
+1. Скопировать каждый класс View
+2. Переименовать в Controller и отнаследовать от ApiController
+3. Поменять тип в HView с HttpContent на HttpRequestMessage
+4. Добавить Route
 
-   1. Скопировать
-   2. Переименовать в Controller и отнаследовать от ApiController
-   3. Поменять тип в HView с HttpContent на HttpRequestMessage
-   4. Добавить Route
-
-        [HttpGet, HttpPost]
-        [Route(<Название>)]
-        public HttpResponseMessage Route()
-        {
-            return HWebApiSynchronizeHandler.Process<object>(this.Request, HView);
-        }
+    [HttpGet, HttpPost]
+    [Route(<Название>)]
+    public HttpResponseMessage Route()
+    {
+        return HWebApiSynchronizeHandler.Process<object>(this.Request, HView);
+    }
