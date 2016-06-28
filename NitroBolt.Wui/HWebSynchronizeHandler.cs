@@ -251,14 +251,6 @@ namespace NitroBolt.Wui
         public TimeSpan Elapsed;
     }
 
-    public class HtmlResult<TElement>
-    {
-        public object State;
-        public TElement Html;
-        /// <summary>
-        /// Имеет силу только при первой загрузке страницы
-        /// </summary>
-        public TimeSpan? RefreshPeriod;
-    }
+
 
 }

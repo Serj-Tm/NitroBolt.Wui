@@ -35,8 +35,11 @@ namespace NitroBolt.Wui
                                          head.Nodes,
                                          Scripts(frame:Guid.NewGuid().ToString(), refreshPeriod: result.RefreshPeriod ?? TimeSpan.FromSeconds(10))
                                        );
-                html = new HElement("html", startHead, new HElement("body"));
-                return ApplyProcessor(new HttpResponseMessage() { Content = new StringContent(html.ToHtmlText(), System.Text.Encoding.UTF8, "text/html") }, result);
+                //html = new HElement("html", startHead, new HElement("body"));
+                var firstHtmlTransformer = result.As<HtmlResult>()?.FirstHtmlTransformer ?? FirstHtmlTransformer;
+                html = firstHtmlTransformer(html);
+                var toHtmlText = result.As<HtmlResult>()?.ToHtmlText ?? ToHtmlText;
+                return ApplyProcessor(new HttpResponseMessage() { Content = new StringContent(toHtmlText(html), Encoding.UTF8, "text/html") }, result);
             }
             else
             {
@@ -63,12 +66,20 @@ namespace NitroBolt.Wui
 
                 PushUpdate(frame, prev.Item1, result.Html, result.State, watch.Elapsed);
 
-                return ApplyProcessor(new HttpResponseMessage() { Content = new StringContent(JsonConvert.SerializeObject(jupdate), System.Text.Encoding.UTF8, "application/javascript") }, null);
+                return ApplyProcessor(new HttpResponseMessage() { Content = new StringContent(JsonConvert.SerializeObject(jupdate), Encoding.UTF8, "application/javascript") }, null);
             }
+        }
+        static HElement FirstHtmlTransformer(HElement element)
+        {
+            return new HElement("html", element.Element("head"), new HElement("body"));
+        }
+        static string ToHtmlText(HElement element)
+        {
+            return element?.ToHtmlText();
         }
         static HttpResponseMessage ApplyProcessor(HttpResponseMessage response, HtmlResult<HElement> result)
         {
-            var apiResult = result as HtmlApiResult<HElement>;
+            var apiResult = result as HtmlResult;
             if (apiResult != null && apiResult.ResponseProcessor != null)
             {
                 apiResult.ResponseProcessor(response);
@@ -155,8 +166,20 @@ namespace NitroBolt.Wui
 
     }
 
-    public class HtmlApiResult<TElement>:HtmlResult<TElement>
+    public class HtmlResult:HtmlResult<HElement>
     {
         public Action<HttpResponseMessage> ResponseProcessor = null;
+        public Func<HElement, HElement> FirstHtmlTransformer = null;
+        public Func<HElement, string> ToHtmlText = null;
+    }
+
+    public class HtmlResult<TElement>
+    {
+        public object State;
+        public TElement Html;
+        /// <summary>
+        /// Имеет силу только при первой загрузке страницы
+        /// </summary>
+        public TimeSpan? RefreshPeriod;
     }
 }
