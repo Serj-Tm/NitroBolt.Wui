@@ -35,7 +35,6 @@ namespace NitroBolt.Wui
                                          head.Nodes,
                                          Scripts(frame:Guid.NewGuid().ToString(), refreshPeriod: result.RefreshPeriod ?? TimeSpan.FromSeconds(10))
                                        );
-                //html = new HElement("html", startHead, new HElement("body"));
                 var firstHtmlTransformer = result.As<HtmlResult>()?.FirstHtmlTransformer ?? FirstHtmlTransformer;
                 html = firstHtmlTransformer(new HElement("html", startHead, html.Nodes.Where(node => node.As<HElement>()?.Name.LocalName != "head")));
                 var toHtmlText = result.As<HtmlResult>()?.ToHtmlText ?? ToHtmlText;
@@ -43,7 +42,6 @@ namespace NitroBolt.Wui
             }
             else
             {
-
                 var json = Parse(request.Content.ReadAsStringAsync().Result);
 
                 var route = request.GetRouteData()?.Route?.RouteTemplate ?? "<null>";
@@ -54,19 +52,31 @@ namespace NitroBolt.Wui
 
                 var json_commands = (json.JPath("commands").As<JArray>()?.Select(j => new JsonData(j)).ToArray()).OrEmpty();
 
-                var watch = System.Diagnostics.Stopwatch.StartNew();
-                var result = page(prev?.Item2?.State.As<TState>() ?? new TState(), json_commands, request);
-                watch.Stop();
+                try
+                {
 
-                var isPartial = result.Html.Name.LocalName != "html";
-                var toBody = isPartial ? html => html : (Func<HElement, HElement>)(html => html?.Element("body"));
+                    var watch = System.Diagnostics.Stopwatch.StartNew();
+                    var result = page(prev?.Item2?.State.As<TState>() ?? new TState(), json_commands, request);
+                    watch.Stop();
 
-                var js_updates = HtmlJavaScriptDiffer.JsSync(new HElementProvider(), toBody(prev?.Item2?.Page), toBody(result.Html)).ToArray();
-                var jupdate = new Dictionary<string, object>() { { "cycle", prev.Item1 }, { "prev_cycle", cycle }, { "processed_commands", json_commands.Length }, { "updates", js_updates } };
+                    var isPartial = result.Html.Name.LocalName != "html";
+                    var toBody = isPartial ? html => html : (Func<HElement, HElement>)(html => html?.Element("body"));
 
-                PushUpdate(frame, prev.Item1, result.Html, result.State, watch.Elapsed);
+                    var js_updates = HtmlJavaScriptDiffer.JsSync(new HElementProvider(), toBody(prev?.Item2?.Page), toBody(result.Html)).ToArray();
+                    var jupdate = new Dictionary<string, object>() { { "cycle", prev.Item1 }, { "prev_cycle", cycle }, { "processed_commands", json_commands.Length }, { "updates", js_updates } };
 
-                return ApplyProcessor(new HttpResponseMessage() { Content = new StringContent(JsonConvert.SerializeObject(jupdate), Encoding.UTF8, "application/javascript") }, result);
+                    PushUpdate(frame, prev.Item1, result.Html, result.State, watch.Elapsed);
+
+                    return ApplyProcessor(new HttpResponseMessage() { Content = new StringContent(JsonConvert.SerializeObject(jupdate), Encoding.UTF8, "application/javascript") }, result);
+                }
+                catch (Exception exc)//HACK ловятся все ошибки для того, чтобы не зациклилась страница. Добавить обработку ошибок на сторону js.
+                {
+                    
+                    var jupdate = new Dictionary<string, object>() { { "cycle", prev.Item1 }, { "prev_cycle", cycle }, { "processed_commands", json_commands.Length }, { "updates", new object[] { } } };
+
+                    return ApplyProcessor(new HttpResponseMessage() { Content = new StringContent(JsonConvert.SerializeObject(jupdate), Encoding.UTF8, "application/javascript") }, null);
+
+                }
             }
         }
         static HElement FirstHtmlTransformer(HElement element)
