@@ -151,13 +151,13 @@ class ContainerSynchronizer
             {
                 if (value.substr(0, 2) == ';;')
                 {
-                    var res = function (sync, e) { return eval(value); }.apply(element, [this, e]);
+                    var res = function (sync, e) { return eval(value); }.apply(element.get(0), [this, e]);
                     if (typeof (res) == 'boolean')
                         return res;
                 }
                 else
                 {
-                    var res = function () { return eval(value); }.apply(element);
+                    var res = function () { return eval(value); }.apply(element.get(0));
                     if (typeof (res) == 'boolean')
                         return res;
                     this.server_element_event(element, e);
@@ -222,7 +222,7 @@ class ContainerSynchronizer
         if (jsInit != null)
         {
             //window.external.Debug('js-init: ' + jsInit);
-            !(function () { return eval(jsInit); }.apply(element));
+            !(function () { return eval(jsInit); }.apply(element.get(0)));
 
             //var _this = element;
             //eval(jsInit);
@@ -259,7 +259,7 @@ class ContainerSynchronizer
                 current.prepend(this.create_element(desc));
                 break;
             case 'js-update':
-                !(function () { return eval(<string><any>desc); }.apply(current));
+                !(function () { return eval(<string><any>desc); }.apply(current.get(0)));
                 //var _this = current;
                 //eval(<string><any>desc);
                 break;

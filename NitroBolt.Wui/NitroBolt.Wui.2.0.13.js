@@ -112,12 +112,12 @@ var ContainerSynchronizer = (function () {
         if (value != null) {
             element.on(event, function (e) {
                 if (value.substr(0, 2) == ';;') {
-                    var res = function (sync, e) { return eval(value); }.apply(element, [_this, e]);
+                    var res = function (sync, e) { return eval(value); }.apply(element.get(0), [_this, e]);
                     if (typeof (res) == 'boolean')
                         return res;
                 }
                 else {
-                    var res = function () { return eval(value); }.apply(element);
+                    var res = function () { return eval(value); }.apply(element.get(0));
                     if (typeof (res) == 'boolean')
                         return res;
                     _this.server_element_event(element, e);
@@ -162,7 +162,7 @@ var ContainerSynchronizer = (function () {
                 jsInit = desc.a[i].value;
         }
         if (jsInit != null) {
-            !(function () { return eval(jsInit); }.apply(element));
+            !(function () { return eval(jsInit); }.apply(element.get(0)));
         }
         this.set_element(element, desc);
         return element;
@@ -192,7 +192,7 @@ var ContainerSynchronizer = (function () {
                 current.prepend(this.create_element(desc));
                 break;
             case 'js-update':
-                !(function () { return eval(desc); }.apply(current));
+                !(function () { return eval(desc); }.apply(current.get(0)));
                 break;
         }
     };
