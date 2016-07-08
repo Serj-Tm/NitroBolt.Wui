@@ -29,3 +29,4 @@ C# Server-Side React
     {
         return HWebApiSynchronizeHandler.Process<object>(this.Request, HView);
     }
+5. В javascript-обработчиках событий заменить "this[0]"/"this.get(0)" на "this". Начиная с NitroBolt.Wui 2.0 в обработчики событий передается ссылка на HtmlElement, ранее передавался HtmlElement обернутый в JQuery.

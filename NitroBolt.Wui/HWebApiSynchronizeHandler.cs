@@ -26,14 +26,16 @@ namespace NitroBolt.Wui
             if (request.Method == HttpMethod.Get)
             {
                 var result = page(new TState(), Array<JsonData>.Empty, request);
+                if (result.As<HtmlResult>()?.RawResponse != null)
+                    return result.As<HtmlResult>()?.RawResponse;
 
                 var html = result.Html;
                 var head = html.Element("head") ?? new HElement("head");
 
                 var startHead = new HElement(head.Name,
                                          head.Attributes,
-                                         head.Nodes,
-                                         Scripts(frame:Guid.NewGuid().ToString(), refreshPeriod: result.RefreshPeriod ?? TimeSpan.FromSeconds(10))
+                                         Scripts(frame: Guid.NewGuid().ToString(), refreshPeriod: result.RefreshPeriod ?? TimeSpan.FromSeconds(10)),
+                                         head.Nodes
                                        );
                 var firstHtmlTransformer = result.As<HtmlResult>()?.FirstHtmlTransformer ?? FirstHtmlTransformer;
                 html = firstHtmlTransformer(new HElement("html", startHead, html.Nodes.Where(node => node.As<HElement>()?.Name.LocalName != "head")));
@@ -58,6 +60,8 @@ namespace NitroBolt.Wui
                     var watch = System.Diagnostics.Stopwatch.StartNew();
                     var result = page(prev?.Item2?.State.As<TState>() ?? new TState(), json_commands, request);
                     watch.Stop();
+                    if (result.As<HtmlResult>()?.RawResponse != null)
+                        return result.As<HtmlResult>()?.RawResponse;
 
                     var isPartial = result.Html.Name.LocalName != "html";
                     var toBody = isPartial ? html => html : (Func<HElement, HElement>)(html => html?.Element("body"));
@@ -181,6 +185,7 @@ namespace NitroBolt.Wui
         public Action<HttpResponseMessage> ResponseProcessor = null;
         public Func<HElement, HElement> FirstHtmlTransformer = null;
         public Func<HElement, string> ToHtmlText = null;
+        public HttpResponseMessage RawResponse = null;
     }
 
     public class HtmlResult<TElement>
