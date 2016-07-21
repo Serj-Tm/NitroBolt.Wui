@@ -10,6 +10,11 @@ class ContainerSynchronizer
 {
     constructor(container: JQuery = null, name: string = null, sync_refresh_period: number = 10 * 1000, id:string = null)
     {
+        if (container == null)
+            (<any>document).controller = this;
+        else
+            (container[0] as any).controller = this;
+
         this.container = container != null ? $(container) : $('body');
         //this.server_event = server_event == null ? this.server_web_event : server_event;
         this.container_name = name;

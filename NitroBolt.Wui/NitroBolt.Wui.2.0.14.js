@@ -9,6 +9,10 @@ var ContainerSynchronizer = (function () {
         this.is_need_update = false;
         this.is_updating = false;
         this.commands = [];
+        if (container == null)
+            document.controller = this;
+        else
+            container[0].controller = this;
         this.container = container != null ? $(container) : $('body');
         this.container_name = name;
         this.sync_refresh_period = sync_refresh_period;
