@@ -13,7 +13,7 @@ class ContainerSynchronizer
         if (container == null)
             (<any>document).controller = this;
         else
-            (container[0] as any).controller = this;
+            ($(container)[0] as any).controller = this;
 
         this.container = container != null ? $(container) : $('body');
         //this.server_event = server_event == null ? this.server_web_event : server_event;
