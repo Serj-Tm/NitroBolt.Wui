@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "exports": {
+    "NitroBolt.Wui/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5",
+      "compile": {
+        "bin/Release/NitroBolt.Wui.dll": {}
+      },
+      "runtime": {
+        "../packages/Microsoft.AspNet.WebApi.Client.5.2.3/lib/net45/System.Net.Http.Formatting.dll": {},
+        "../packages/Microsoft.AspNet.WebApi.Core.5.2.3/lib/net45/System.Web.Http.dll": {},
+        "../packages/Microsoft.AspNet.WebApi.WebHost.5.2.3/lib/net45/System.Web.Http.WebHost.dll": {},
+        "../packages/Newtonsoft.Json.7.0.1/lib/net45/Newtonsoft.Json.dll": {},
+        "../packages/NitroBolt.Functional.1.0.17/lib/net45/NitroBolt.Functional.dll": {},
+        "../packages/System.Collections.Immutable.1.1.36/lib/portable-net45+win8+wp8+wpa81/System.Collections.Immutable.dll": {},
+        "bin/Release/NitroBolt.Wui.dll": {}
+      },
+      "contentFiles": {
+        "bin/Release/NitroBolt.Wui.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    }
+  }
+}

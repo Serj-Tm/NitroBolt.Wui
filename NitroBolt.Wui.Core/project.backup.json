@@ -7,13 +7,16 @@
   },
 
   "frameworks": {
+    "netstandard1.6": {
+      "imports": "netcoreapp1.0"
+    },
     "net451": {
       "dependencies": {
         "NitroBolt.Wui": {
           "target": "project"
         }
       }
-    } 
+    }
 
   }
 }
