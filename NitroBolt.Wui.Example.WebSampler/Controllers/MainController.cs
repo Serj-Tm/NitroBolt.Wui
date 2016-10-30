@@ -58,6 +58,9 @@ namespace NitroBolt.WebSampler
                     case "x-container":
                         state = state.With(text: json.JPath("data", "x")?.ToString());
                         break;
+                    case "array-name":
+                        state = state.With(arrayNameResult: json.JPath("data", "x")?.ToString());
+                        break;
                     default:
                         break;
                 }
@@ -111,7 +114,18 @@ namespace NitroBolt.WebSampler
                    h.Input(h.type("radio"), h.Attribute("name", "x1"), h.data("name", "x"), h.value("v3")), h.Span("V3"),
                    h.Input(h.data("name", "t"), h.type("text"), h.value("tt")),
                    h.Input(h.type("button"), h.value("send"), h.onclick(";"), new hdata { { "command", "x-container" }, { "container", "radio-container" } })
+                ),
+                h.Div
+                (
+                    h.data("name", "array-name-container"),
+                    h.Div("array name"),
+                    h.Div(h.Element("label", h.Input(h.type("checkbox"), h.data("name", "x[]"), h.value("1")), h.Span("A"))),
+                    h.Div(h.Element("label", h.Input(h.type("checkbox"), h.data("name", "x[]"), h.value("2")), h.Span("B"))),
+                    h.Div(h.Element("label", h.Input(h.type("checkbox"), h.data("name", "x[]"), h.value("3")), h.Span("C"))),
+                    h.Input(h.type("button"), h.value("send"), h.onclick(";"), new hdata { { "command", "array-name" }, { "container", "array-name-container" } }),
+                    h.Div(state.ArrayNameResult)
                 )
+
               )
             );
             return page;
@@ -124,14 +138,16 @@ namespace NitroBolt.WebSampler
     }
     class MainState
     {
-        public MainState(string text = null)
+        public MainState(string text = null, string arrayNameResult = null)
         {
             this.Text = text;
+            this.ArrayNameResult = arrayNameResult;
         }
         public readonly string Text;
-        public MainState With(Option<string> text = null)
+        public readonly string ArrayNameResult;
+        public MainState With(Option<string> text = null, Option<string> arrayNameResult = null)
         {
-            return new MainState(text: text.Else(Text));
+            return new MainState(text: text.Else(Text), arrayNameResult: arrayNameResult.Else(ArrayNameResult));
         }
     }
 

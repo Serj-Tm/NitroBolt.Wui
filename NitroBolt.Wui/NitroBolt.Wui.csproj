@@ -85,13 +85,13 @@
     <Compile Include="XRaw.cs" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="NitroBolt.Wui.2.0.14.ts" />
+    <TypeScriptCompile Include="NitroBolt.Wui.2.0.15.ts" />
     <TypeScriptCompile Include="ts\jquery.d.ts" />
     <TypeScriptCompile Include="ts\server_event.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NitroBolt.Wui.nuspec" />
-    <None Include="NitroBolt.Wui.2.0.14.js" />
+    <None Include="NitroBolt.Wui.2.0.15.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

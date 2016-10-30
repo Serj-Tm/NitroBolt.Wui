@@ -14,7 +14,7 @@ namespace NitroBolt.Wui
 {
     public static class HWebApiSynchronizeHandler
     {
-        public static readonly string NitroBolt_Wui_js = "/Scripts/NitroBolt.Wui.2.0.14.js";
+        public static readonly string NitroBolt_Wui_js = "/Scripts/NitroBolt.Wui.2.0.15.js";
 
         public static HElement[] Scripts(string frame = null, bool isDebug = false, TimeSpan? refreshPeriod = null, string syncJsName = null)
         {

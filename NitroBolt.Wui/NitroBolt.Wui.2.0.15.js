@@ -52,10 +52,21 @@ var ContainerSynchronizer = (function () {
                 childs = $.merge(childs, container.find('textarea'));
                 for (var i = 0; i < childs.length; ++i) {
                     var child = $(childs[i]);
-                    if (child.data().name != null) {
-                        if (!child.is(':radio') || child.is(':checked'))
-                            result_data[child.data().name] = this.element_value(child);
+                    var name_1 = child.data().name;
+                    if (name_1 == null)
+                        continue;
+                    if (child.is(':radio') && !child.is(':checked'))
+                        continue;
+                    if (this.is_array_name(name_1)) {
+                        name_1 = name_1.substr(0, name_1.length - 2);
+                        if (result_data[name_1] == null)
+                            result_data[name_1] = [];
+                        var val = this.array_element_value(child);
+                        if (val != null)
+                            result_data[name_1].push(val);
                     }
+                    else
+                        result_data[name_1] = this.element_value(child);
                 }
             }
         }
@@ -67,6 +78,14 @@ var ContainerSynchronizer = (function () {
         if (element.is(':radio'))
             return element.is(':checked') ? element.val() : null;
         return element.val();
+    };
+    ContainerSynchronizer.prototype.array_element_value = function (element) {
+        if (element.is(':radio') || element.is(':checkbox'))
+            return element.is(':checked') ? element.val() : null;
+        return element.val();
+    };
+    ContainerSynchronizer.prototype.is_array_name = function (name) {
+        return name != null && name.length >= 2 && name.substr(name.length - 2) === '[]';
     };
     ContainerSynchronizer.prototype.find_element = function (current, path) {
         var len = path.length;

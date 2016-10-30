@@ -78,12 +78,23 @@ class ContainerSynchronizer
                 childs = $.merge(childs, container.find('textarea'));
                 for (var i: number = 0; i < childs.length; ++i)
                 {
-                    var child = $(childs[i]);
-                    if (child.data().name != null)
+                    const child = $(childs[i]);
+                    let name:string = child.data().name;
+                    if (name == null)
+                        continue;
+                    if (child.is(':radio') && !child.is(':checked'))
+                        continue;
+                    if (this.is_array_name(name))
                     {
-                        if (!child.is(':radio') || child.is(':checked'))
-                            result_data[child.data().name] = this.element_value(child);
+                        name = name.substr(0, name.length - 2);
+                        if (result_data[name] == null)
+                            result_data[name] = [];
+                        const val = this.array_element_value(child);
+                        if (val != null)
+                            (result_data[name] as any[]).push(val);
                     }
+                    else
+                        result_data[name] = this.element_value(child);
                 }
             }
         }
@@ -96,6 +107,16 @@ class ContainerSynchronizer
         if (element.is(':radio'))
             return element.is(':checked') ? element.val() : null;
         return element.val();
+    }
+    array_element_value(element: JQuery): any
+    {
+        if (element.is(':radio') || element.is(':checkbox'))
+            return element.is(':checked') ? element.val() : null;
+        return element.val();
+    }
+    is_array_name(name: string): boolean
+    {
+        return name != null && name.length >= 2 && name.substr(name.length - 2) === '[]';
     }
 
     find_element(current: HTMLElement, path: PathEntry[]): HTMLElement
