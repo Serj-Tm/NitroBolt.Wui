@@ -9,6 +9,10 @@ var ContainerSynchronizer = (function () {
         this.is_need_update = false;
         this.is_updating = false;
         this.commands = [];
+        if (container == null)
+            document.controller = this;
+        else
+            $(container)[0].controller = this;
         this.container = container != null ? $(container) : $('body');
         this.container_name = name;
         this.sync_refresh_period = sync_refresh_period;
@@ -48,10 +52,21 @@ var ContainerSynchronizer = (function () {
                 childs = $.merge(childs, container.find('textarea'));
                 for (var i = 0; i < childs.length; ++i) {
                     var child = $(childs[i]);
-                    if (child.data().name != null) {
-                        if (!child.is(':radio') || child.is(':checked'))
-                            result_data[child.data().name] = this.element_value(child);
+                    var name_1 = child.data().name;
+                    if (name_1 == null)
+                        continue;
+                    if (child.is(':radio') && !child.is(':checked'))
+                        continue;
+                    if (this.is_array_name(name_1)) {
+                        name_1 = name_1.substr(0, name_1.length - 2);
+                        if (result_data[name_1] == null)
+                            result_data[name_1] = [];
+                        var val = this.array_element_value(child);
+                        if (val != null)
+                            result_data[name_1].push(val);
                     }
+                    else
+                        result_data[name_1] = this.element_value(child);
                 }
             }
         }
@@ -63,6 +78,14 @@ var ContainerSynchronizer = (function () {
         if (element.is(':radio'))
             return element.is(':checked') ? element.val() : null;
         return element.val();
+    };
+    ContainerSynchronizer.prototype.array_element_value = function (element) {
+        if (element.is(':radio') || element.is(':checkbox'))
+            return element.is(':checked') ? element.val() : null;
+        return element.val();
+    };
+    ContainerSynchronizer.prototype.is_array_name = function (name) {
+        return name != null && name.length >= 2 && name.substr(name.length - 2) === '[]';
     };
     ContainerSynchronizer.prototype.find_element = function (current, path) {
         var len = path.length;
@@ -112,12 +135,12 @@ var ContainerSynchronizer = (function () {
         if (value != null) {
             element.on(event, function (e) {
                 if (value.substr(0, 2) == ';;') {
-                    var res = function (sync, e) { return eval(value); }.apply(element, [_this, e]);
+                    var res = function (sync, e) { return eval(value); }.apply(element.get(0), [_this, e]);
                     if (typeof (res) == 'boolean')
                         return res;
                 }
                 else {
-                    var res = function () { return eval(value); }.apply(element);
+                    var res = function () { return eval(value); }.apply(element.get(0));
                     if (typeof (res) == 'boolean')
                         return res;
                     _this.server_element_event(element, e);
@@ -162,7 +185,7 @@ var ContainerSynchronizer = (function () {
                 jsInit = desc.a[i].value;
         }
         if (jsInit != null) {
-            !(function () { return eval(jsInit); }.apply(element));
+            !(function () { return eval(jsInit); }.apply(element.get(0)));
         }
         this.set_element(element, desc);
         return element;
@@ -192,7 +215,7 @@ var ContainerSynchronizer = (function () {
                 current.prepend(this.create_element(desc));
                 break;
             case 'js-update':
-                !(function () { return eval(desc); }.apply(current));
+                !(function () { return eval(desc); }.apply(current.get(0)));
                 break;
         }
     };
