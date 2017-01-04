@@ -88,7 +88,7 @@ namespace NitroBolt.Wui
         }
         static HElement FirstHtmlTransformer(HElement element)
         {
-            return new HElement("html", element.Element("head"), new HElement("body"));
+            return new HElement("html", element.Element("head"), new HElement("body", ""));
         }
         static string ToHtmlText(HElement element)
         {
