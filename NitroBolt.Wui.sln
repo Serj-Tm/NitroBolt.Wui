@@ -1,22 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui", "NitroBolt.Wui\NitroBolt.Wui.csproj", "{6ADEFD5A-BB8A-44F8-9E8E-CDFBD0ABC510}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Tests", "NitroBolt.Wui.Tests\NitroBolt.Wui.Tests.csproj", "{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1DFEFEC9-894D-4FDE-8859-23B7D5CC0EC6}"
 	ProjectSection(SolutionItems) = preProject
 		ReadMe.md = ReadMe.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui", "NitroBolt.Wui\NitroBolt.Wui.csproj", "{6ADEFD5A-BB8A-44F8-9E8E-CDFBD0ABC510}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Tests", "NitroBolt.Wui.Tests\NitroBolt.Wui.Tests.csproj", "{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Example.WebStateMachine", "NitroBolt.Wui.Example.WebStateMachine\NitroBolt.Wui.Example.WebStateMachine.csproj", "{17775536-422C-480B-B78E-5398BD1422D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Example.WebSampler", "NitroBolt.Wui.Example.WebSampler\NitroBolt.Wui.Example.WebSampler.csproj", "{0104937D-B001-4505-B0FD-84C377F5051A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NitroBolt.Wui.Core", "NitroBolt.Wui.Core\NitroBolt.Wui.Core.xproj", "{CDE4F0AC-ECF1-4D21-9461-8042351E4492}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitroBolt.Wui.Core", "NitroBolt.Wui.Core\NitroBolt.Wui.Core.csproj", "{CDE4F0AC-ECF1-4D21-9461-8042351E4492}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
