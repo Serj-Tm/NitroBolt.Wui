@@ -335,7 +335,8 @@ class ContainerSynchronizer
     server_event(json: string | Object): void
     {
         this.commands.push((typeof json === 'string') ? JSON.parse(json) : json);
-        $.post(this.js_path(), JSON.stringify({ 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands }), data => this.sync(data), 'json');
+        //$.post(this.js_path(), JSON.stringify({ 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands }), data => this.sync(data), 'json');
+        this.post({ 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands });
     }
 
     update_all(): void
@@ -344,18 +345,31 @@ class ContainerSynchronizer
         {
             if (this.commands.length > 0)
             {
-                $.post(this.js_path(), JSON.stringify({ 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands }), data => this.sync(data), 'json');
+                //$.post(this.js_path(), JSON.stringify({ 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands }), data => this.sync(data), 'json');
+                this.post({ 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands });
             }
             else
             {
-                $.post(this.js_path(), JSON.stringify({ 'frame': this.id, 'cycle': this.cycle }), data => this.sync(data), 'json');
-                //$.getJSON(this.js_path('cycle=' + this.cycle + '&r=' + (1000 * Math.random() + '').substring(0, 3)), data => this.sync(data));
+                //$.post(this.js_path(), JSON.stringify({ 'frame': this.id, 'cycle': this.cycle }), data => this.sync(data), 'json');
+                this.post({ 'frame': this.id, 'cycle': this.cycle });
             }
         }
         catch (e)
         {
             console.log(e);
         }
+    }
+    post(data: any)
+    {
+        fetch(this.js_path(), {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: new Headers(
+                { 'Content-Type': 'application/json' }
+                )
+        })
+        .then(response => response.json())
+        .then(json => this.sync(json));
     }
     js_path(query?: string): string
     {
