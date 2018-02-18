@@ -1,10 +1,10 @@
 var ContainerSynchronizer = (function () {
     function ContainerSynchronizer(container, name, sync_refresh_period, id) {
-        var _this = this;
         if (container === void 0) { container = null; }
         if (name === void 0) { name = null; }
         if (sync_refresh_period === void 0) { sync_refresh_period = 10 * 1000; }
         if (id === void 0) { id = null; }
+        var _this = this;
         this.cycle = 0;
         this.is_need_update = false;
         this.is_updating = false;
@@ -245,23 +245,31 @@ var ContainerSynchronizer = (function () {
         }
     };
     ContainerSynchronizer.prototype.server_event = function (json) {
-        var _this = this;
         this.commands.push((typeof json === 'string') ? JSON.parse(json) : json);
-        $.post(this.js_path(), JSON.stringify({ 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands }), function (data) { return _this.sync(data); }, 'json');
+        this.post({ 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands });
     };
     ContainerSynchronizer.prototype.update_all = function () {
-        var _this = this;
         try {
             if (this.commands.length > 0) {
-                $.post(this.js_path(), JSON.stringify({ 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands }), function (data) { return _this.sync(data); }, 'json');
+                this.post({ 'frame': this.id, 'cycle': this.cycle, 'commands': this.commands });
             }
             else {
-                $.post(this.js_path(), JSON.stringify({ 'frame': this.id, 'cycle': this.cycle }), function (data) { return _this.sync(data); }, 'json');
+                this.post({ 'frame': this.id, 'cycle': this.cycle });
             }
         }
         catch (e) {
             console.log(e);
         }
+    };
+    ContainerSynchronizer.prototype.post = function (data) {
+        var _this = this;
+        fetch(this.js_path(), {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        })
+            .then(function (response) { return response.json(); })
+            .then(function (json) { return _this.sync(json); });
     };
     ContainerSynchronizer.prototype.js_path = function (query) {
         var path = this.container_name;
@@ -275,13 +283,13 @@ var ContainerSynchronizer = (function () {
         }
         return path;
     };
-    ContainerSynchronizer.eventProps = ['type', 'bubbles', 'cancelable', 'eventPhase', 'timeStamp',
-        'button', 'clientX', 'clientY', 'screenX', 'screenY',
-        'keyIdentifier', 'keyLocation', 'keyCode', 'charCode', 'which',
-        'altKey', 'ctrlKey', 'metaKey', 'shiftKey'
-    ];
     return ContainerSynchronizer;
 }());
+ContainerSynchronizer.eventProps = ['type', 'bubbles', 'cancelable', 'eventPhase', 'timeStamp',
+    'button', 'clientX', 'clientY', 'screenX', 'screenY',
+    'keyIdentifier', 'keyLocation', 'keyCode', 'charCode', 'which',
+    'altKey', 'ctrlKey', 'metaKey', 'shiftKey'
+];
 var Command = (function () {
     function Command() {
     }
