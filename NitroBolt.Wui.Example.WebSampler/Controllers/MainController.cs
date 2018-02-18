@@ -61,6 +61,9 @@ namespace NitroBolt.WebSampler
                     case "array-name":
                         state = state.With(arrayNameResult: json.JPath("data", "x")?.ToString());
                         break;
+                    case "two-question-mark":
+                        state = state.With(text: json.JPath("data", "text")?.ToString());
+                        break;
                     default:
                         break;
                 }
@@ -124,6 +127,14 @@ namespace NitroBolt.WebSampler
                     h.Div(h.Element("label", h.Input(h.type("checkbox"), h.data("name", "x[]"), h.value("3")), h.Span("C"))),
                     h.Input(h.type("button"), h.value("send"), h.onclick(";"), new hdata { { "command", "array-name" }, { "container", "array-name-container" } }),
                     h.Div(state.ArrayNameResult)
+                ),
+                h.Div
+                (
+
+                    h.data("name", "two-question-mark-container"),
+                    h.Div("two question mark bug"),
+                    h.TextArea("??", h.data("name", "text")),
+                    h.Input(h.type("button"), h.value("send"), h.onclick(";"), new hdata { { "command", "two-question-mark" }, { "container", "two-question-mark-container" } })
                 )
 
               )
