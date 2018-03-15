@@ -9,14 +9,17 @@ var ContainerSynchronizer = (function () {
         this.is_need_update = false;
         this.is_updating = false;
         this.commands = [];
-        if (container == null)
+        if (container == null) {
             document.controller = this;
+            ContainerSynchronizer.main = this;
+        }
         else
             $(container)[0].controller = this;
         this.container = container != null ? $(container) : $('body');
         this.container_name = name;
         this.sync_refresh_period = sync_refresh_period;
         this.id = id != null ? id : Math.random().toString();
+        ContainerSynchronizer.all[this.id] = this;
         window.setInterval(function () { return _this.update_all(); }, this.sync_refresh_period);
         window.setInterval(function () {
             if (_this.is_need_update) {
@@ -283,6 +286,8 @@ var ContainerSynchronizer = (function () {
         }
         return path;
     };
+    ContainerSynchronizer.all = {};
+    ContainerSynchronizer.main = null;
     ContainerSynchronizer.eventProps = ['type', 'bubbles', 'cancelable', 'eventPhase', 'timeStamp',
         'button', 'clientX', 'clientY', 'screenX', 'screenY',
         'keyIdentifier', 'keyLocation', 'keyCode', 'charCode', 'which',

@@ -11,7 +11,10 @@ class ContainerSynchronizer
     constructor(container: JQuery = null, name: string = null, sync_refresh_period: number = 10 * 1000, id:string = null)
     {
         if (container == null)
+        {
             (<any>document).controller = this;
+            ContainerSynchronizer.main = this;
+        }
         else
             ($(container)[0] as any).controller = this;
 
@@ -19,7 +22,9 @@ class ContainerSynchronizer
         //this.server_event = server_event == null ? this.server_web_event : server_event;
         this.container_name = name;
         this.sync_refresh_period = sync_refresh_period;
-        this.id = id != null ? id :  Math.random().toString();
+        this.id = id != null ? id : Math.random().toString();
+
+        ContainerSynchronizer.all[this.id] = this;
 
         window.setInterval(() => this.update_all(), this.sync_refresh_period);
         window.setInterval(() =>
@@ -39,8 +44,9 @@ class ContainerSynchronizer
     sync_refresh_period: number;
     id: string;
 
-
-
+    public static all = {};
+    public static main: ContainerSynchronizer = null;
+   
     static eventProps = ['type', 'bubbles', 'cancelable', 'eventPhase', 'timeStamp',
         'button', 'clientX', 'clientY', 'screenX', 'screenY',
         'keyIdentifier', 'keyLocation', 'keyCode', 'charCode', 'which',
