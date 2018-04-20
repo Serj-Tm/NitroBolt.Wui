@@ -222,7 +222,8 @@ class ContainerSynchronizer
             }
             else if (desc.a[i].name.substring(0, 5) === 'data-')
             {
-                element.data(desc.a[i].name.substring(5), desc.a[i].value);
+                //element.data(desc.a[i].name.substring(5), desc.a[i].value);
+                element[0].setAttribute(desc.a[i].name, desc.a[i].value);
             }
             else
             {

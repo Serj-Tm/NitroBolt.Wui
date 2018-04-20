@@ -135,7 +135,12 @@ namespace NitroBolt.WebSampler
                     h.Div("two question mark bug"),
                     h.TextArea("??", h.data("name", "text")),
                     h.Input(h.type("button"), h.value("send"), h.onclick(";"), new hdata { { "command", "two-question-mark" }, { "container", "two-question-mark-container" } })
-                )
+                ),
+                h.Div(
+                    h.style("border:1px solid lightgray"),
+                    h.Div("Data attributes"),
+                    h.Div(h.style("padding:5px"), h.Attribute("data-x", 12), h.Attribute("data-xs", "[12, 13]"), h.Attribute("data-x-r", "r"), "text")
+                    )
 
               )
             );
