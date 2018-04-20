@@ -2,9 +2,7 @@
 C# Server-Side React
 
 ## Создание проекта
-1. Создать новый проект Asp.net с поддержкой Web Api 2
-    
-  New Project -> Visual C# -> Windows -> Web -> Asp.net Web Application:  Asp.net 4.5 Templates -> Empty (Web Api: checked)
+1. Создать новый проект Asp.net с поддержкой Web Api 2 `New Project -> Visual C# -> Windows -> Web -> Asp.net Web Application:  Asp.net 4.5 Templates -> Empty (Web Api: checked)`
 2. Install-Package NitroBolt.Wui
 3. Добавить Controller, отнаследованный от ApiController
 4. Добавить метод View с сигнатурой `static HtmlResult<HElement> View(MainState state, JsonData[] commands, HttpRequestMessage request)`
