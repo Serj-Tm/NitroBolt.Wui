@@ -269,6 +269,7 @@ var ContainerSynchronizer = (function () {
         fetch(this.js_path(), {
             method: "POST",
             body: JSON.stringify(data),
+            credentials: 'include',
             headers: new Headers({ 'Content-Type': 'application/json' })
         })
             .then(function (response) { return response.json(); })
