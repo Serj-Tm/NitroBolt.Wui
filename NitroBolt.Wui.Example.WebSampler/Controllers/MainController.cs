@@ -17,7 +17,14 @@ namespace NitroBolt.WebSampler
         [Route("")]
         public HttpResponseMessage Route()
         {
-            return HWebApiSynchronizeHandler.Process<object>(this.Request, HView);
+            var response = HWebApiSynchronizeHandler.Process<object>(this.Request, HView);
+
+            var cookie = new System.Net.Http.Headers.CookieHeaderValue("tick-id", DateTime.UtcNow.Ticks.ToString());
+            cookie.Expires = DateTimeOffset.Now.AddMinutes(10);
+
+            response.Headers.AddCookies(new[] { cookie });
+            return response;
+
         }
 
         [HttpGet, HttpPost]
@@ -25,6 +32,7 @@ namespace NitroBolt.WebSampler
         public HttpResponseMessage RouteRaw()
         {
             return HWebApiSynchronizeHandler.Process<object>(this.Request, HViewRaw);
+
         }
 
         static HtmlResult HViewRaw(object _state, JsonData[] jsons, HttpRequestMessage request)
@@ -69,8 +77,10 @@ namespace NitroBolt.WebSampler
                 }
             }
 
+            var prevTickId = request.Headers.GetCookies("tick-id").FirstOrDefault()?.Cookies.FirstOrDefault()?.Value;
 
-            var page = Page(state);
+
+            var page = Page(state, prevTickId);
             return new HtmlResult
             {
                 Html = page,
@@ -79,7 +89,7 @@ namespace NitroBolt.WebSampler
         }
 
 
-        private static HElement Page(MainState state)
+        private static HElement Page(MainState state, string prevTickId)
         {
 
             var page = h.Html
@@ -93,6 +103,7 @@ namespace NitroBolt.WebSampler
                 (
                   h.Raw(string.Format("1<b>{0:dd.MM.yy.HH:mm:ss.fff}</b> 2", DateTime.Now))
                 ),
+                h.Div("Previous request tick id(from cookie): " + prevTickId),
                 h.Input(h.type("text"), h.Attribute("onkeyup", ";"), new hdata { { "command", "text" } }),
                 h.Input(h.type("button"), h.onclick(";"), new hdata { { "command", "error" } }, h.value("throw error")),
                 h.Div(state.Text),
