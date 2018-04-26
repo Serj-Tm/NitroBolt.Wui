@@ -368,16 +368,31 @@ class ContainerSynchronizer
     }
     post(data: any)
     {
-        fetch(this.js_path(), {
-            method: "POST",
-            body: JSON.stringify(data),
-            credentials: 'include',
-            headers: new Headers(
-                { 'Content-Type': 'application/json' }
+        if (typeof fetch == "function") {
+            fetch(this.js_path(), {
+                method: "POST",
+                body: JSON.stringify(data),
+                credentials: 'include',
+                headers: new Headers(
+                    { 'Content-Type': 'application/json' }
                 )
-        })
-        .then(response => response.json())
-        .then(json => this.sync(json));
+            })
+                .then(response => response.json())
+                .then(json => this.sync(json));
+        }
+        else
+            this.jquery_post(data);
+    }
+    jquery_post(data: any) {
+        //$.post(this.js_path(), JSON.stringify(data), data => this.sync(data), 'json');
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: data => this.sync(data),
+            jsonp: false
+        });
+
     }
     js_path(query?: string): string
     {
