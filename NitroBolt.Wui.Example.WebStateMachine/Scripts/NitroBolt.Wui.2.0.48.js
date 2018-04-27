@@ -266,14 +266,28 @@ var ContainerSynchronizer = (function () {
     };
     ContainerSynchronizer.prototype.post = function (data) {
         var _this = this;
-        fetch(this.js_path(), {
-            method: "POST",
-            body: JSON.stringify(data),
-            credentials: 'include',
-            headers: new Headers({ 'Content-Type': 'application/json' })
-        })
-            .then(function (response) { return response.json(); })
-            .then(function (json) { return _this.sync(json); });
+        if (typeof fetch == "function") {
+            fetch(this.js_path(), {
+                method: "POST",
+                body: JSON.stringify(data),
+                credentials: 'include',
+                headers: new Headers({ 'Content-Type': 'application/json' })
+            })
+                .then(function (response) { return response.json(); })
+                .then(function (json) { return _this.sync(json); });
+        }
+        else
+            this.jquery_post(data);
+    };
+    ContainerSynchronizer.prototype.jquery_post = function (data) {
+        var _this = this;
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (data) { return _this.sync(data); },
+            jsonp: false
+        });
     };
     ContainerSynchronizer.prototype.js_path = function (query) {
         var path = this.container_name;

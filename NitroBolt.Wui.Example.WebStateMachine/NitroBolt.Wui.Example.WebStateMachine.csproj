@@ -57,8 +57,8 @@
       <HintPath>..\packages\NitroBolt.Functional.1.0.17\lib\net45\NitroBolt.Functional.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NitroBolt.Wui, Version=2.0.46.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NitroBolt.Wui.2.0.46\lib\net45\NitroBolt.Wui.dll</HintPath>
+    <Reference Include="NitroBolt.Wui, Version=2.0.48.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NitroBolt.Wui.2.0.48\lib\net45\NitroBolt.Wui.dll</HintPath>
     </Reference>
     <Reference Include="System.Collections.Immutable, Version=1.1.36.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.1.36\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
@@ -95,7 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Scripts\NitroBolt.Wui.2.0.46.js" />
+    <Content Include="Scripts\NitroBolt.Wui.2.0.48.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
