@@ -18,8 +18,8 @@ namespace NitroBolt.Wui
             elementProvider.Attribute("content", "IE=11")
            ),
           isDebug 
-            ? elementProvider.Element("script", elementProvider.Attribute("src", "http://code.jquery.com/jquery-1.10.2.js"), "")
-            : elementProvider.Element("script", elementProvider.Attribute("src", "http://code.jquery.com/jquery-1.10.2.min.js"), ""),
+            ? elementProvider.Element("script", elementProvider.Attribute("src", "https://code.jquery.com/jquery-1.10.2.js"), "")
+            : elementProvider.Element("script", elementProvider.Attribute("src", "https://code.jquery.com/jquery-1.10.2.min.js"), ""),
           isInlineSyncScript 
           ? elementProvider.Element("script", 
             elementProvider.Attribute("type", "text/javascript"),
